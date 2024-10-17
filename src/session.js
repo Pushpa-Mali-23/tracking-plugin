@@ -15,7 +15,7 @@ export function initializeSession() {
   }
 
   // Listen for page unload to end the session
-  window.addEventListener('beforeunload', handleSessionEnd);
+  //window.addEventListener('beforeunload', handleSessionEnd);
 }
 
 function createNewSession() {
