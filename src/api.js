@@ -42,7 +42,7 @@ export function sendSession(data) {
     headers: {
       "Content-Type": "application/json",
       "User-Agent": navigator.userAgent,
-      "x-api-key": WIDGET_ID,
+      "apikey": WIDGET_ID,
       //"Authorization": `Bearer ${TOKEN}`
     },
     body: JSON.stringify(payload),
@@ -71,7 +71,7 @@ export function sendEndSession(sessionId, sessionEnd = null) {
     headers: {
       "Content-Type": "application/json",
       "User-Agent": navigator.userAgent,
-      "x-api-key": WIDGET_ID,
+      "apikey": WIDGET_ID,
     },
     body: JSON.stringify(payload),
   })
@@ -105,7 +105,7 @@ export function sendActivity(activityType, typeId = null, additionalData = {}) {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          "x-api-key": WIDGET_ID,
+          "apikey": WIDGET_ID,
         },
         body: JSON.stringify(payload),
         keepalive: true
