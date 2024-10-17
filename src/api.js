@@ -20,7 +20,7 @@ export function setApiUrls(urls) {
 
 export function sendSession(data) {
   const payload = {
-    contact_id: getUserId(), // Assuming user_id corresponds to contact_id
+    //contact_id: getUserId(), // Assuming user_id corresponds to contact_id
     ip_address: data.ip_address || null,
     coordinates: data.coordinates || null,
     city: data.city || null,
@@ -28,10 +28,13 @@ export function sendSession(data) {
     country: data.country || null,
     user_agent: navigator.userAgent,
     session_start: data.session_start || new Date().toISOString(),
-    session_end: data.session_end || null,
-    time_spent: data.time_spent || null,
+    //session_end: data.session_end || null,
+    //time_spent: data.time_spent || null,
     channel: data.channel || null,
     referrer: data.referrer || document.referrer,
+    ...data.contact_id && { contact_id: getUserId() }, // Include contact_id if it has a value
+    ...data.session_end && { session_end: data.session_end }, // Include if it has a value
+    ...data.time_spent && { time_spent: data.time_spent }, // Include if it has a value
   };
 
   fetch(SESSION_API_URL, {
