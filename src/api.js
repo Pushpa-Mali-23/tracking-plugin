@@ -5,6 +5,7 @@ let SESSION_API_URL = `${SERVER_DOMAIN}/api/session`;
 let ACTIVITY_API_URL = `${SERVER_DOMAIN}/api/activity`;
 let END_SESSION_API_URL = `${SERVER_DOMAIN}/api/session/end`; // End Session API
 let WIDGET_ID = "NRGovRsL7oD3y/aW7VF5pQ==";
+let TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Im9BZXFMYXZxMEFRayIsInBpZCI6NjIsImlhdCI6MTcyODg5NjI1NiwiZXhwIjoxNzMxNDg4MjU2fQ.YOQTtBMMEPN6M0shmJV-DrTjrNoEFxXwCXESq1dex7c";
 export function setApiUrls(urls) {
   if (urls?.sessionUrl) {
     SESSION_API_URL = urls.sessionUrl;
@@ -38,7 +39,8 @@ export function sendSession(data) {
     headers: {
       "Content-Type": "application/json",
       "User-Agent": navigator.userAgent,
-      "x-api-key": WIDGET_ID,
+      //"x-api-key": WIDGET_ID,
+      "Authorization": `Bearer ${TOKEN}`
     },
     body: JSON.stringify(payload),
   })
