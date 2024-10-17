@@ -1,8 +1,9 @@
 import { getUserId } from "./user";
 
-let SESSION_API_URL = "https://your-api-domain.com/api/session";
-let ACTIVITY_API_URL = "https://your-api-domain.com/api/activity";
-let END_SESSION_API_URL = "https://your-api-domain.com/api/session/end"; // New End Session API
+let SERVER_DOMAIN = 'http://localhost:8080';
+let SESSION_API_URL = `${SERVER_DOMAIN}/api/session`;
+let ACTIVITY_API_URL = `${SERVER_DOMAIN}/api/activity`;
+let END_SESSION_API_URL = `${SERVER_DOMAIN}/api/session/end`; // End Session API
 let WIDGET_ID = "NRGovRsL7oD3y/aW7VF5pQ==";
 export function setApiUrls(urls) {
   if (urls?.sessionUrl) {
