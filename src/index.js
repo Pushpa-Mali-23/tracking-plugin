@@ -4,6 +4,7 @@ import { initActivityTracking } from './activities';
 import { setUserId } from './user';
 import { setApiUrls, sendActivity } from './api';
 
+console.log('Imported setUserId:', setUserId); 
 (function(global) {
   // const dnt = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
   // if (dnt === '1') {
