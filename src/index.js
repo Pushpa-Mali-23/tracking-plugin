@@ -5,11 +5,11 @@ import { setUserId } from './user';
 import { setApiUrls, sendActivity } from './api';
 
 (function(global) {
-  const dnt = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
-  if (dnt === '1') {
-    console.warn('Do Not Track enabled. Tracking is disabled.');
-    return;
-  }
+  // const dnt = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+  // if (dnt === '1') {
+  //   console.warn('Do Not Track enabled. Tracking is disabled.');
+  //   return;
+  // }
 
   // Initialize session and activity tracking
   initializeSession();

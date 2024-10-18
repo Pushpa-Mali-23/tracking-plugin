@@ -106,6 +106,7 @@ export function sendActivity(activityType, typeId = null, additionalData = {}) {
         headers: {
           'Content-Type': 'application/json',
           "apikey": WIDGET_ID,
+           credentials: 'include',
         },
         body: JSON.stringify(payload),
         keepalive: true
