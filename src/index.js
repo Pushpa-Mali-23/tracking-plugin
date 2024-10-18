@@ -6,36 +6,35 @@ import { setApiUrls, sendActivity } from './api';
 
 console.log('Imported setUserId:', setUserId); 
 (function(global) {
-  // const dnt = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
-  // if (dnt === '1') {
-  //   console.warn('Do Not Track enabled. Tracking is disabled.');
-  //   return;
-  // }
+  try {
+    // Initialize session and activity tracking
+    initializeSession();
+    initActivityTracking();
 
-  // Initialize session and activity tracking
-  initializeSession();
-  initActivityTracking();
+    // Expose global functions
+    global.TrackingPlugin = {
+      setUserId: function(userId) {
+        console.log('TrackingPlugin.setUserId called with:', userId);
+        setUserId(userId);
+      },
+      trackCustomActivity: function(activityType, typeId, additionalData) {
+        if (activityType.trim() === '') {
+          console.error('Invalid activityType provided to trackCustomActivity.');
+          return;
+        }
+        sendActivity(activityType, additionalData, typeId);
+      },
+      config: function(options) {
+        if (options.apiUrl) {
+          setApiUrls(options.apiUrl);
+          console.log('API URLs configured:', options.apiUrl);
+        }
+        // Handle other configurations
+      }
+    };
 
-  // Expose global functions
-  global.TrackingPlugin = {
-    setUserId: function(userId) {
-      setUserId(userId);
-    },
-    trackCustomActivity: function(activityType, typeId, additionalData) {
-      if (activityType.trim() === '') {
-        console.error('Invalid activityType provided to trackCustomActivity.');
-        return;
-      }
-      sendActivity(activityType, additionalData, typeId);
-    },
-    config: function(options) {
-      if (options.apiUrl) {
-        setApiUrls(options.apiUrl); // Expecting { sessionUrl: '', activityUrl: '', endSessionUrl: '' }
-      }
-    //   if (options.enableClickTracking !== undefined) {
-    //     toggleClickTracking(options.enableClickTracking);
-    //   }
-      // Handle other configurations
-    }
-  };
+    console.log('TrackingPlugin initialized:', global.TrackingPlugin);
+  } catch (error) {
+    console.error('Error initializing TrackingPlugin:', error);
+  }
 })(window);
