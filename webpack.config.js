@@ -6,9 +6,9 @@ module.exports = {
   output: {
     filename: 'tracking-plugin.min.js',
     path: path.resolve(__dirname, ''),
-    library: 'TrackingPlugin',
-    libraryTarget: 'umd',
-    globalObject: 'this',
+    // library: 'TrackingPlugin',
+    // libraryTarget: 'umd',
+    // globalObject: 'this',
   },
   mode: 'production',
 };
