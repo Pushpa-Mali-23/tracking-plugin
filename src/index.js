@@ -1,10 +1,10 @@
 // src/index.js
 import { initializeSession } from './session';
 import { initActivityTracking } from './activities';
-import { setUserId } from './user';
+import { setUserId as internalSetUserId} from './user';
 import { setApiUrls, sendActivity } from './api';
 
-console.log('Imported setUserId:', setUserId); 
+console.log('Imported setUserId:', internalSetUserId); 
 (function(global) {
   try {
     // Initialize session and activity tracking
@@ -15,7 +15,7 @@ console.log('Imported setUserId:', setUserId);
     global.TrackingPlugin = {
       setUserId: function(userId) {
         console.log('TrackingPlugin.setUserId called with:', userId);
-        setUserId(userId);
+        internalSetUserId(userId);
       },
       trackCustomActivity: function(activityType, typeId, additionalData) {
         if (activityType.trim() === '') {
