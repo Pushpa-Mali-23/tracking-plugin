@@ -116,7 +116,7 @@ export function sendActivity(activityType, typeId = null, additionalData = {}) {
         },
         body: JSON.stringify(payload),
         keepalive: true,
-        credentials: 'include',
+        // credentials: 'include',
       }).catch(err => console.error('Activity tracking failed:', err));
     }
   //}
