@@ -85,7 +85,7 @@ export function sendEndSession(sessionId, sessionEnd = null) {
     .catch((err) => console.error("End session tracking failed:", err));
 }
 
-export function sendActivity(activityType, typeId = null, additionalData = {}) {
+export function sendActivity(activityType,additionalData = {}, typeId = null, ) {
   console.log(WIDGET_ID);
   // console.log("hereeeee in send activity");
   // console.log(activityType,"<<activityType");
@@ -101,8 +101,8 @@ export function sendActivity(activityType, typeId = null, additionalData = {}) {
       page_url: additionalData?.page_url || window.location.href,
       type: activityType, // Assuming 'type' corresponds to 'activityType'
       //type_id: typeId || additionalData?.type_id,
-      //...(typeId || additionalData?.type_id ? { type_id: typeId || additionalData?.type_id } : {})
-      ...(typeId ? { type_id: typeId } : {})
+      ...(typeId || additionalData?.type_id ? { type_id: typeId || additionalData?.type_id } : {})
+      //...(typeId ? { type_id: typeId } : {})
     };
 
     console.log(payload);

@@ -25,7 +25,7 @@ import { setApiUrls, sendActivity } from './api';
         console.error('Invalid activityType provided to trackCustomActivity.');
         return;
       }
-      sendActivity(activityType, typeId, additionalData);
+      sendActivity(activityType, additionalData, typeId);
     },
     config: function(options) {
       if (options.apiUrl) {
