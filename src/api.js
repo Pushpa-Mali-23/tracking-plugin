@@ -180,7 +180,7 @@ export async function updateSessionUserId(sessionId, userId) {
   const url = `${SERVER_DOMAIN}/api/session/${sessionId}`;
   
   const payload = {
-    id: sessionId,
+    id: parseInt(sessionId),
     contact_id: userId
   };
 
