@@ -85,7 +85,7 @@ export function sendEndSession(sessionId, sessionEnd = null) {
     .catch((err) => console.error("End session tracking failed:", err));
 }
 
-export function sendActivity(activityType,additionalData = {}, typeId = null, ) {
+export function sendActivity(activityType,additionalData = {}, typeId = null ) {
   console.log(WIDGET_ID);
   // console.log("hereeeee in send activity");
   // console.log(activityType,"<<activityType");
