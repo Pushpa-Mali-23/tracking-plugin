@@ -97,22 +97,23 @@ export function sendActivity(activityType, typeId = null, additionalData = {}) {
     };
   
     // Use navigator.sendBeacon for better performance on unload
-    if (navigator.sendBeacon) {
-      const blob = new Blob([JSON.stringify(payload)], { type: 'application/json' });
-      navigator.sendBeacon(ACTIVITY_API_URL, blob);
-    } else {
+    // if (navigator.sendBeacon) {
+    //   const blob = new Blob([JSON.stringify(payload)], { type: 'application/json' });
+    //   navigator.sendBeacon(ACTIVITY_API_URL, blob);
+    // } else {
       fetch(ACTIVITY_API_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           "apikey": WIDGET_ID,
-           credentials: 'include',
+          
         },
         body: JSON.stringify(payload),
-        keepalive: true
+        keepalive: true,
+        credentials: 'include',
       }).catch(err => console.error('Activity tracking failed:', err));
     }
-  }
+  //}
 
 // Utility functions to manage session_id
 export function setSessionId(id) {
