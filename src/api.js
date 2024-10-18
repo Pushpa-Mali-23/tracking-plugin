@@ -46,7 +46,7 @@ export function sendSession(data) {
       //"Authorization": `Bearer ${TOKEN}`
     },
     body: JSON.stringify(payload),
-    credentials: 'include',
+    // credentials: 'include',
   })
     .then((response) => response.json())
     .then((data) => {
