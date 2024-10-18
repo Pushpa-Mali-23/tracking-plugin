@@ -105,7 +105,9 @@ export function sendActivity(activityType, typeId = null, additionalData = {}) {
     };
 
     console.log(payload);
-  
+    console.log("========");
+    console.log(additionalData);
+    console.log("========");
     // Use navigator.sendBeacon for better performance on unload
     // if (navigator.sendBeacon) {
     //   const blob = new Blob([JSON.stringify(payload)], { type: 'application/json' });
