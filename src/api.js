@@ -162,9 +162,46 @@ function getCookie(name) {
 
 export function getSessionId() {
   console.log("inside getSessionId");
+  console.log(getCookie("session_id"),"<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<session id");
   return getCookie("session_id");
 }
 
 // export function setSessionId(id) {
 //   setCookie("session_id", id, SESSION_TIMEOUT / 1000 / 60); // Convert ms to minutes
 // }
+
+/**
+ * Updates the session with the provided user ID.
+ * @param {number|string} sessionId - The current session ID.
+ * @param {number|string} userId - The user ID to associate with the session.
+ * @returns {Promise<void>}
+ */
+export async function updateSessionUserId(sessionId, userId) {
+  const url = `${SERVER_DOMAIN}/api/session/${sessionId}`;
+  
+  const payload = {
+    id: sessionId,
+    contact_id: userId
+  };
+
+  try {
+    const response = await fetch(url, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': WIDGET_ID
+      },
+      body: JSON.stringify(payload)
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`API responded with status ${response.status}: ${errorText}`);
+    }
+
+    console.log(`Session ${sessionId} updated with user ID ${userId} successfully.`);
+  } catch (error) {
+    console.error(`Failed to update session ${sessionId} with user ID ${userId}:`, error);
+    throw error; // Re-throw the error to handle it in the calling function if needed
+  }
+}
