@@ -103,6 +103,8 @@ export function sendActivity(activityType, typeId = null, additionalData = {}) {
       //type_id: typeId || additionalData?.type_id,
       ...(typeId || additionalData?.type_id ? { type_id: typeId || additionalData?.type_id } : {})
     };
+
+    console.log(payload);
   
     // Use navigator.sendBeacon for better performance on unload
     // if (navigator.sendBeacon) {
