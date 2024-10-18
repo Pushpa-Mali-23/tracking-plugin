@@ -101,7 +101,8 @@ export function sendActivity(activityType, typeId = null, additionalData = {}) {
       page_url: additionalData?.page_url || window.location.href,
       type: activityType, // Assuming 'type' corresponds to 'activityType'
       //type_id: typeId || additionalData?.type_id,
-      ...(typeId || additionalData?.type_id ? { type_id: typeId || additionalData?.type_id } : {})
+      //...(typeId || additionalData?.type_id ? { type_id: typeId || additionalData?.type_id } : {})
+      ...(typeId ? { type_id: typeId } : {})
     };
 
     console.log(payload);
