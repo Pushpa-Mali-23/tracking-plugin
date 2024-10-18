@@ -46,6 +46,7 @@ export function sendSession(data) {
       //"Authorization": `Bearer ${TOKEN}`
     },
     body: JSON.stringify(payload),
+    credentials: 'include',
   })
     .then((response) => response.json())
     .then((data) => {
@@ -79,7 +80,7 @@ export function sendEndSession(sessionId, sessionEnd = null) {
     .then((data) => {
       console.log("Session ended successfully:", data);
       // Optionally, clear the session_id from storage
-      clearSessionId();
+      //clearSessionId();
     })
     .catch((err) => console.error("End session tracking failed:", err));
 }
@@ -115,13 +116,14 @@ export function sendActivity(activityType, typeId = null, additionalData = {}) {
         },
         body: JSON.stringify(payload),
         keepalive: true,
-        //credentials: 'include',
+        credentials: 'include',
       }).catch(err => console.error('Activity tracking failed:', err));
     }
   //}
 
 // Utility functions to manage session_id
 export function setSessionId(id) {
+  console.log("settting session id in storage");
   const storageKey = "session_id";
   setCookie(storageKey, id, 30); // Expires in 30 minutes
   localStorage.setItem(storageKey, id);
@@ -141,13 +143,17 @@ function setCookie(name, value, minutes) {
 }
 
 function getCookie(name) {
+  console.log("============inside getCookie============");
   const value = `; ${document.cookie}`;
   const parts = value.split(`; ${name}=`);
+  console.log(value,"=========value========");
+  console.log(parts,"=========parts========");
   if (parts.length === 2)
     return decodeURIComponent(parts.pop().split(";").shift());
 }
 
 export function getSessionId() {
+  console.log("inside getSessionId");
   return getCookie("session_id");
 }
 
