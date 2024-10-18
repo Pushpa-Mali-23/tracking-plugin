@@ -91,15 +91,17 @@ export function sendActivity(activityType, typeId = null, additionalData = {}) {
   // console.log(activityType,"<<activityType");
   // console.log(typeId,"<<typeId");
   // console.log(additionalData,"<<additionalData");
+  const session_id=parseInt(getSessionId());
     const payload = {
-      session_id: getSessionId(),
+      session_id: session_id(),
       activity_data: {
         activity_type: activityType,
         ...additionalData
       },
       page_url: additionalData?.page_url || window.location.href,
       type: activityType, // Assuming 'type' corresponds to 'activityType'
-      type_id: typeId,
+      //type_id: typeId || additionalData?.type_id,
+      ...(typeId || additionalData?.type_id ? { type_id: typeId || additionalData?.type_id } : {})
     };
   
     // Use navigator.sendBeacon for better performance on unload
