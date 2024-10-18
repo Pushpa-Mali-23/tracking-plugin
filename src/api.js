@@ -102,10 +102,11 @@ export function sendActivity(activityType, typeId = null, additionalData = {}) {
       type: activityType, // Assuming 'type' corresponds to 'activityType'
       //type_id: typeId || additionalData?.type_id,
       //...(typeId || additionalData?.type_id ? { type_id: typeId || additionalData?.type_id } : {})
-      ...(typeId ? { type_id: typeId } : {})
+      //..(typeId ? { type_id: typeId } : {})
     };
 
     console.log(payload);
+    console.log(typeId ,"<<<<<<<<<<<<<<<<<<<<,updated typeId");
     console.log("========");
     console.log(additionalData);
     console.log("========");
