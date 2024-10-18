@@ -85,6 +85,11 @@ export function sendEndSession(sessionId, sessionEnd = null) {
 }
 
 export function sendActivity(activityType, typeId = null, additionalData = {}) {
+  console.log(WIDGET_ID);
+  console.log("hereeeee in send activity");
+  console.log(activityType,"<<activityType");
+  console.log(typeId,"<<typeId");
+  console.log(additionalData,"<<additionalData");
     const payload = {
       session_id: getSessionId(),
       activity_data: {
@@ -110,7 +115,7 @@ export function sendActivity(activityType, typeId = null, additionalData = {}) {
         },
         body: JSON.stringify(payload),
         keepalive: true,
-        credentials: 'include',
+        //credentials: 'include',
       }).catch(err => console.error('Activity tracking failed:', err));
     }
   //}
