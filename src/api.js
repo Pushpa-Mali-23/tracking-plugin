@@ -181,7 +181,8 @@ export async function updateSessionUserId(sessionId, userId) {
   
   const payload = {
     id: parseInt(sessionId),
-    contact_id: userId
+    contact_id: userId,
+    user_agent:navigator.userAgent
   };
 
   try {
