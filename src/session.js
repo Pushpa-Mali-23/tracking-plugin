@@ -7,32 +7,15 @@ const SESSION_TIMEOUT = 30 * 60 * 1000; // 30 minutes
 let sessionTimer = null;
 
 export function initializeSession() {
-  console.log("<<<<<<<<<<<<<<<<<<<<<<<<<<in initializeSession");
   let sessionId = getSessionId();
   if (!sessionId) {
-    console.log(sessionId,"<<<<<<<<<<<session id found");
     createNewSession();
   } else {
-    console.log("not found");
     resetSessionTimer();
   }
 
   // Listen for page unload to end the session
-  window.addEventListener('beforeunload', handleSessionEnd); // this is getting called even if page is refreshed, but then onwards same session id is used
-
-  //  // Track if the page is being refreshed or navigated away from
-  //  window.addEventListener('beforeunload', (event) => {
-  //   isPageReloaded = true;
-  // });
-
-  // // Use the unload event to handle session end on close
-  // window.addEventListener('unload', handleCloseEvent);
-}
-
-function handleCloseEvent() {
-  if (!isPageReloaded) {
-    handleSessionEnd();
-  }
+  //window.addEventListener('beforeunload', handleSessionEnd);
 }
 
 function createNewSession() {
@@ -63,7 +46,6 @@ export function resetSessionTimer() {
 function handleSessionEnd() {
   const sessionId = getSessionId();
   if (sessionId) {
-    console.log("ending session 1>>>>>>>>>>>>>>>>>>>",sessionId);
     sendEndSession(sessionId);
   }
 }

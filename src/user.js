@@ -15,7 +15,7 @@ export function getUserId() {
 }
 
 export async function setUserId(userId) {
-  //console.log(userId,"<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<userId");
+  console.log(userId,"<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<userId");
   const storageKey = "user_id";
   setCookie(storageKey, userId, 365);
   localStorage.setItem(storageKey, userId);
