@@ -180,11 +180,12 @@ export function getSessionId() {
  * @returns {Promise<void>}
  */
 export async function updateSessionUserId(sessionId, userId) {
+  console.log("parseInt update");
   const url = `${SERVER_DOMAIN}/api/session/${sessionId}`;
   
   const payload = {
     id: parseInt(sessionId),
-    contact_id: userId,
+    contact_id: parseInt(userId),
     user_agent:navigator.userAgent
   };
 
