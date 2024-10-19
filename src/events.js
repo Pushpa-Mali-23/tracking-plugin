@@ -45,6 +45,7 @@ export function initEventListeners() {
         page_url: window.location.href,
         type: 'click',
         type_id: null, // Define if applicable
+        test:"key",
         redirect_url: redirectUrl
       });
     }
