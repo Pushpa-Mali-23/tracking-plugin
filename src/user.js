@@ -15,7 +15,7 @@ export function getUserId() {
 }
 
 export async function setUserId(userId) {
-  console.log(userId,"<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<userId");
+  //console.log(userId,"<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<userId");
   const storageKey = "user_id";
   setCookie(storageKey, userId, 365);
   localStorage.setItem(storageKey, userId);
@@ -51,7 +51,7 @@ export async function setUserId(userId) {
        type_id: null 
      });
      
-     console.log(`User ID ${userId} associated with session ${sessionId} successfully.`);
+     //console.log(`User ID ${userId} associated with session ${sessionId} successfully.`);
    } catch (error) {
      console.error(`Error associating user ID ${userId} with session ${sessionId}:`, error);
    }

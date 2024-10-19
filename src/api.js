@@ -78,7 +78,7 @@ export function sendEndSession(sessionId, sessionEnd = null) {
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log("Session ended successfully:", data);
+      //console.log("Session ended successfully:", data);
       // Optionally, clear the session_id from storage
       //clearSessionId();
     })
@@ -86,7 +86,7 @@ export function sendEndSession(sessionId, sessionEnd = null) {
 }
 
 export function sendActivity(activityType,additionalData = {}, typeId = null ) {
-  console.log(WIDGET_ID);
+  //console.log(WIDGET_ID);
   // console.log("hereeeee in send activity");
   // console.log(activityType,"<<activityType");
   // console.log(typeId,"<<typeId");
@@ -105,11 +105,11 @@ export function sendActivity(activityType,additionalData = {}, typeId = null ) {
       //...(typeId ? { type_id: typeId } : {})
     };
 
-    console.log(payload);
-    console.log(typeId ,"<<<<<<<<<<<<<<<<<<<<,updated typeId");
-    console.log("========");
-    console.log(additionalData);
-    console.log("========");
+   // console.log(payload);
+    //console.log(typeId ,"<<<<<<<<<<<<<<<<<<<<,updated typeId");
+   // console.log("========");
+   // console.log(additionalData);
+   // console.log("========");
     // Use navigator.sendBeacon for better performance on unload
     // if (navigator.sendBeacon) {
     //   const blob = new Blob([JSON.stringify(payload)], { type: 'application/json' });
@@ -131,7 +131,7 @@ export function sendActivity(activityType,additionalData = {}, typeId = null ) {
 
 // Utility functions to manage session_id
 export function setSessionId(id) {
-  console.log("settting session id in storage");
+ // console.log("settting session id in storage");
   const storageKey = "session_id";
   setCookie(storageKey, id, 30); // Expires in 30 minutes
   localStorage.setItem(storageKey, id);
@@ -149,23 +149,23 @@ function setCookie(name, value, minutes) {
   //   value
   // )}; expires=${expires}; path=/`;
   const cookieString = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/`;
-  console.log(`Settinggggggggg cookie: ${cookieString}`); // Debugging log
+  //console.log(`Settinggggggggg cookie: ${cookieString}`); // Debugging log
   document.cookie = cookieString;
 }
 
 function getCookie(name) {
-  console.log("============inside getCookie============");
+  //console.log("============inside getCookie============");
   const value = `; ${document.cookie}`;
   const parts = value.split(`; ${name}=`);
-  console.log(value,"=========value========");
-  console.log(parts,"=========parts========");
+  //console.log(value,"=========value========");
+  //console.log(parts,"=========parts========");
   if (parts.length === 2)
     return decodeURIComponent(parts.pop().split(";").shift());
 }
 
 export function getSessionId() {
-  console.log("inside getSessionId");
-  console.log(getCookie("session_id"),"<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<session id");
+  //console.log("inside getSessionId");
+ // console.log(getCookie("session_id"),"<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<session id");
   return getCookie("session_id");
 }
 
@@ -203,7 +203,7 @@ export async function updateSessionUserId(sessionId, userId) {
       throw new Error(`API responded with status ${response.status}: ${errorText}`);
     }
 
-    console.log(`Session ${sessionId} updated with user ID ${userId} successfully.`);
+    //console.log(`Session ${sessionId} updated with user ID ${userId} successfully.`);
   } catch (error) {
     console.error(`Failed to update session ${sessionId} with user ID ${userId}:`, error);
     throw error; // Re-throw the error to handle it in the calling function if needed

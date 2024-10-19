@@ -14,7 +14,7 @@ console.log('Imported setUserId:', internalSetUserId);
     // Expose global functions
     global.TrackingPlugin = {
       setUserId: function(userId) {
-        console.log('TrackingPlugin.setUserId called with:', userId);
+        //console.log('TrackingPlugin.setUserId called with:', userId);
         internalSetUserId(userId);
       },
       trackCustomActivity: function(activityType, typeId, additionalData) {
@@ -27,13 +27,13 @@ console.log('Imported setUserId:', internalSetUserId);
       config: function(options) {
         if (options.apiUrl) {
           setApiUrls(options.apiUrl);
-          console.log('API URLs configured:', options.apiUrl);
+          //console.log('API URLs configured:', options.apiUrl);
         }
         // Handle other configurations
       }
     };
 
-    console.log('TrackingPlugin initialized:', global.TrackingPlugin);
+   // console.log('TrackingPlugin initialized:', global.TrackingPlugin);
   } catch (error) {
     console.error('Error initializing TrackingPlugin:', error);
   }
