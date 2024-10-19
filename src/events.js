@@ -31,7 +31,7 @@ export function initEventListeners() {
 
         window.addEventListener('click', checkRedirect);
       }
-      console.log(redirectUrl,"<<<<<<<<<<<<<<<<<<<<<<<<<<redirectUrl");
+      console.log(redirectUrl,"<<<<<<<<<<<<<<<<<<<<<<<<<<redirectUrl2");
       sendActivity('click', {
         activity_data: {
           tag: target.tagName.toLowerCase(),
@@ -40,13 +40,13 @@ export function initEventListeners() {
           text: target.innerText || null,
           x: event.clientX,
           y: event.clientY,
-          selector: getCssSelector(target)
+          selector: getCssSelector(target),
+          test:"key",
+          redirect_url: redirectUrl
         },
         page_url: window.location.href,
         type: 'click',
-        type_id: null, // Define if applicable
-        test:"key",
-        redirect_url: redirectUrl
+        type_id: null // Define if applicable
       });
     }
   });
