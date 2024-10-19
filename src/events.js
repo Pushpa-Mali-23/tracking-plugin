@@ -7,6 +7,29 @@ export function initEventListeners() {
   document.addEventListener('click', function(event) {
     const target = event.target.closest('a, button, input, select, textarea');
     if (target) {
+      // Determine if the target is a link (anchor) or a button with a redirection action
+      const isLink = target.tagName.toLowerCase() === 'a' && target.href;
+      const isButtonRedirect = target.tagName.toLowerCase() === 'button';
+      let redirectUrl = null;
+
+      if (isLink) {
+        // Capture the href value for anchors
+        redirectUrl = target.href;
+      } else if (isButtonRedirect) {
+        // If it's a button, check if its click event triggers a navigation
+        const originalLocation = window.location.href;
+
+        // Add a temporary click event listener to detect the redirection
+        const checkRedirect = function() {
+          const newLocation = window.location.href;
+          if (newLocation !== originalLocation) {
+            redirectUrl = newLocation;
+          }
+          window.removeEventListener('click', checkRedirect);
+        };
+
+        window.addEventListener('click', checkRedirect);
+      }
       sendActivity('click', {
         activity_data: {
           tag: target.tagName.toLowerCase(),
@@ -19,7 +42,8 @@ export function initEventListeners() {
         },
         page_url: window.location.href,
         type: 'click',
-        type_id: null // Define if applicable
+        type_id: null, // Define if applicable
+        redirect_url: redirectUrl
       });
     }
   });
