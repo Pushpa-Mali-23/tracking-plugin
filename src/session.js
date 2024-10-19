@@ -15,7 +15,21 @@ export function initializeSession() {
   }
 
   // Listen for page unload to end the session
-  window.addEventListener('beforeunload', handleSessionEnd);
+  //window.addEventListener('beforeunload', handleSessionEnd); // this is getting called even if page is refreshed, but then onwards same session id is used
+
+   // Track if the page is being refreshed or navigated away from
+   window.addEventListener('beforeunload', (event) => {
+    isPageReloaded = true;
+  });
+
+  // Use the unload event to handle session end on close
+  window.addEventListener('unload', handleCloseEvent);
+}
+
+function handleCloseEvent() {
+  if (!isPageReloaded) {
+    handleSessionEnd();
+  }
 }
 
 function createNewSession() {
@@ -54,7 +68,10 @@ function handleSessionEnd() {
 function getCookie(name) {
   const value = `; ${document.cookie}`;
   const parts = value.split(`; ${name}=`);
-  if (parts.length === 2) return decodeURIComponent(parts.pop().split(';').shift());
+  if (parts.length === 2) {
+    return decodeURIComponent(parts.pop().split(';').shift());
+  }
+  return null;
 }
 
 function setCookie(name, value, minutes) {

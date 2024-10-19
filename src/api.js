@@ -156,10 +156,12 @@ function getCookie(name) {
   console.log("============inside getCookie============");
   const value = `; ${document.cookie}`;
   const parts = value.split(`; ${name}=`);
-  console.log(value,"=========value========");
-  console.log(parts,"=========parts========");
-  if (parts.length === 2)
+  console.log(value, "=========value========");
+  console.log(parts, "=========parts========");
+  if (parts.length === 2) {
     return decodeURIComponent(parts.pop().split(";").shift());
+  }
+  return null;
 }
 
 export function getSessionId() {
