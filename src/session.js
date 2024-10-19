@@ -15,7 +15,7 @@ export function initializeSession() {
   }
 
   // Listen for page unload to end the session
-  //window.addEventListener('beforeunload', handleSessionEnd);
+  window.addEventListener('beforeunload', handleSessionEnd);
 }
 
 function createNewSession() {
@@ -46,6 +46,7 @@ export function resetSessionTimer() {
 function handleSessionEnd() {
   const sessionId = getSessionId();
   if (sessionId) {
+    console.log("ending session 1>>>>>>>>>>>>>>>>>>>",sessionId);
     sendEndSession(sessionId);
   }
 }

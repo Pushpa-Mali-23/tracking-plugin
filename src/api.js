@@ -60,6 +60,7 @@ export function sendSession(data) {
 }
 
 export function sendEndSession(sessionId, sessionEnd = null) {
+  console.log("ending session 2>>>>>>>>>>>>>>>>>>>",sessionId);
   const payload = {
     session_id: sessionId,
     session_end: sessionEnd
@@ -80,7 +81,7 @@ export function sendEndSession(sessionId, sessionEnd = null) {
     .then((data) => {
       console.log("Session ended successfully:", data);
       // Optionally, clear the session_id from storage
-      //clearSessionId();
+      clearSessionId();
     })
     .catch((err) => console.error("End session tracking failed:", err));
 }
@@ -138,6 +139,7 @@ export function setSessionId(id) {
 }
 
 function clearSessionId() {
+  console.log("removing session from storage>>>>>>>>>>>>>>>>>>>");
   const storageKey = "session_id";
   setCookie(storageKey, "", -1); // Expire the cookie
   localStorage.removeItem(storageKey);
