@@ -32,7 +32,7 @@ export function initEventListeners() {
 
         window.addEventListener('click', checkRedirect);
       }
-      console.log(redirectUrl,"<<<<<<<<<<<<<<<<<<<<<<<<<<redirectUrl2");
+      console.log(redirectUrl,"<<<<<<<<<<<<<<<<<<<<<<<<<<redirectUrl10");
       sendActivity('click', {
         activity_data: {
           tag: target.tagName.toLowerCase(),
@@ -49,7 +49,7 @@ export function initEventListeners() {
         type_id: null // Define if applicable
       });
      
-      return; // Exit early as the sendActivity will be called in the timeout
+      //return; // Exit early as the sendActivity will be called in the timeout
     }
     
   });
