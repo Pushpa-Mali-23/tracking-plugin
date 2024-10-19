@@ -37,6 +37,8 @@ export function sendSession(data) {
     ...data.time_spent && { time_spent: data.time_spent }, // Include if it has a value
   };
 
+  console.log(payload,"<<<<<<<<<<<<<<<<<<<<<<<<<<<payload");
+
   fetch(SESSION_API_URL, {
     method: "POST",
     headers: {
