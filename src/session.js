@@ -1,6 +1,6 @@
 // src/session.js
 import { getUserId } from './user';
-import { sendSession, sendEndSession, getSessionId, setSessionId } from './api';
+import { sendSession, sendEndSession, getSessionId, setSessionId, clearSessionId, clearUserId } from './api';
 
 const SESSION_TIMEOUT = 30 * 60 * 1000; // 30 minutes
 
@@ -15,7 +15,7 @@ export function initializeSession() {
   }
 
   // Listen for page unload to end the session
-  //window.addEventListener('beforeunload', handleSessionEnd);
+  window.addEventListener('beforeunload', handleSessionEnd);
 }
 
 function createNewSession() {
@@ -49,10 +49,13 @@ export function resetSessionTimer() {
 }
 
 function handleSessionEnd() {
+  console.log("end session");
   const sessionId = getSessionId();
   if (sessionId) {
     sendEndSession(sessionId);
   }
+  clearSessionId();
+  clearUserId();
 }
 
 function getCookie(name) {

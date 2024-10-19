@@ -139,8 +139,14 @@ export function setSessionId(id) {
   localStorage.setItem(storageKey, id);
 }
 
-function clearSessionId() {
+export function clearSessionId() {
   const storageKey = "session_id";
+  setCookie(storageKey, "", -1); // Expire the cookie
+  localStorage.removeItem(storageKey);
+}
+
+export function clearUserId() {
+  const storageKey = "user_id";
   setCookie(storageKey, "", -1); // Expire the cookie
   localStorage.removeItem(storageKey);
 }
