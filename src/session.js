@@ -21,8 +21,12 @@ export function initializeSession() {
 function createNewSession() {
   console.log("craeting new sessionnnnnnnnnnnnnnnnnnnnnnnnnnnn")
   // Gather necessary session data
+  const user_id=getUserId();
+  console.log(user_id,"1");
+  console.log(typeof user_id,"typeof used");
+  console.log(typeof parseInt(user_id),"typeof used");
   const sessionData = {
-    contact_id: parseInt(getUserId()),
+    contact_id: parseInt(user_id),
     ip_address: getUserIP(), // Implement getUserIP if needed
     coordinates: getUserCoordinates(), // Implement geolocation if needed
     city: getUserCity(), // Implement geolocation or use a service
