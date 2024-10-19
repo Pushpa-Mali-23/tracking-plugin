@@ -7,10 +7,13 @@ const SESSION_TIMEOUT = 30 * 60 * 1000; // 30 minutes
 let sessionTimer = null;
 
 export function initializeSession() {
+  console.log("<<<<<<<<<<<<<<<<<<<<<<<<<<in initializeSession");
   let sessionId = getSessionId();
   if (!sessionId) {
+    console.log(sessionId,"<<<<<<<<<<<session id found");
     createNewSession();
   } else {
+    console.log("not found");
     resetSessionTimer();
   }
 
