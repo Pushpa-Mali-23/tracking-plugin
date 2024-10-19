@@ -32,7 +32,7 @@ export function sendSession(data) {
     //time_spent: data.time_spent || null,
     channel: data.channel || null,
     referrer: data.referrer || document.referrer,
-    ...data.contact_id && { contact_id: getUserId() }, // Include contact_id if it has a value
+    ...data.contact_id && { contact_id: parseInt(getUserId()) }, // Include contact_id if it has a value
     ...data.session_end && { session_end: data.session_end }, // Include if it has a value
     ...data.time_spent && { time_spent: data.time_spent }, // Include if it has a value
   };
