@@ -7,6 +7,7 @@ export function initEventListeners() {
   document.addEventListener('click', function(event) {
     const target = event.target.closest('a, button, input, select, textarea');
     if (target) {
+      console.log("updateddd add event listener");
       // Determine if the target is a link (anchor) or a button with a redirection action
       const isLink = target.tagName.toLowerCase() === 'a' && target.href;
       const isButtonRedirect = target.tagName.toLowerCase() === 'button';
@@ -30,6 +31,7 @@ export function initEventListeners() {
 
         window.addEventListener('click', checkRedirect);
       }
+      console.log(redirectUrl,"<<<<<<<<<<<<<<<<<<<<<<<<<<redirectUrl");
       sendActivity('click', {
         activity_data: {
           tag: target.tagName.toLowerCase(),
