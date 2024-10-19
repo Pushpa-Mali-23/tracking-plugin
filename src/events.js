@@ -12,68 +12,46 @@ export function initEventListeners() {
       const isLink = target.tagName.toLowerCase() === 'a' && target.href;
       const isButtonRedirect = target.tagName.toLowerCase() === 'button';
       let redirectUrl = null;
-      const originalLocation = window.location.href;
+      //const originalLocation = window.location.href;
 
       if (isLink) {
         // Capture the href value for anchors
         redirectUrl = target.href;
       } else if (isButtonRedirect) {
-      //   // If it's a button, check if its click event triggers a navigation
-      //   const originalLocation = window.location.href;
+        // If it's a button, check if its click event triggers a navigation
+        const originalLocation = window.location.href;
 
-      //   // Add a temporary click event listener to detect the redirection
-      //   const checkRedirect = function() {
-      //     const newLocation = window.location.href;
-      //     if (newLocation !== originalLocation) {
-      //       redirectUrl = newLocation;
-      //     }
-      //     window.removeEventListener('click', checkRedirect);
-      //   };
+        // Add a temporary click event listener to detect the redirection
+        const checkRedirect = function() {
+          const newLocation = window.location.href;
+          if (newLocation !== originalLocation) {
+            redirectUrl = newLocation;
+          }
+          window.removeEventListener('click', checkRedirect);
+        };
 
-      //   window.addEventListener('click', checkRedirect);
-      // }
-      // console.log(redirectUrl,"<<<<<<<<<<<<<<<<<<<<<<<<<<redirectUrl2");
-      // sendActivity('click', {
-      //   activity_data: {
-      //     tag: target.tagName.toLowerCase(),
-      //     id: target.id || null,
-      //     classes: target.className || null,
-      //     text: target.innerText || null,
-      //     x: event.clientX,
-      //     y: event.clientY,
-      //     selector: getCssSelector(target),
-      //     redirect_url: redirectUrl
-      //   },
-      //   page_url: window.location.href,
-      //   type: 'click',
-      //   type_id: null // Define if applicable
-      // });
-      // Add a setTimeout to check for redirection after the click event
-      setTimeout(() => {
-        const newLocation = window.location.href;
-        if (newLocation !== originalLocation) {
-          redirectUrl = newLocation;
-        }
-        console.log(redirectUrl, "<<<<<<<<<<<<<<<< redirectUrl after button click4");
-        sendActivity('click', {
-          activity_data: {
-            tag: target.tagName.toLowerCase(),
-            id: target.id || null,
-            classes: target.className || null,
-            text: target.innerText || null,
-            x: event.clientX,
-            y: event.clientY,
-            selector: getCssSelector(target),
-            redirect_url: redirectUrl
-          },
-          page_url: window.location.href,
-          type: 'click',
-          type_id: null
-        });
-      }, 100);
+        window.addEventListener('click', checkRedirect);
+      }
+      console.log(redirectUrl,"<<<<<<<<<<<<<<<<<<<<<<<<<<redirectUrl2");
+      sendActivity('click', {
+        activity_data: {
+          tag: target.tagName.toLowerCase(),
+          id: target.id || null,
+          classes: target.className || null,
+          text: target.innerText || null,
+          x: event.clientX,
+          y: event.clientY,
+          selector: getCssSelector(target),
+          redirect_url: redirectUrl
+        },
+        page_url: window.location.href,
+        type: 'click',
+        type_id: null // Define if applicable
+      });
+     
       return; // Exit early as the sendActivity will be called in the timeout
     }
-    }
+    
   });
 
   // // Form Submissions
