@@ -12,6 +12,7 @@ export function initEventListeners() {
       const isLink = target.tagName.toLowerCase() === 'a' && target.href;
       const isButtonRedirect = target.tagName.toLowerCase() === 'button';
       let redirectUrl = null;
+      const originalLocation = window.location.href;
 
       if (isLink) {
         // Capture the href value for anchors
@@ -53,7 +54,7 @@ export function initEventListeners() {
         if (newLocation !== originalLocation) {
           redirectUrl = newLocation;
         }
-        console.log(redirectUrl, "<<<<<<<<<<<<<<<< redirectUrl after button click3");
+        console.log(redirectUrl, "<<<<<<<<<<<<<<<< redirectUrl after button click4");
         sendActivity('click', {
           activity_data: {
             tag: target.tagName.toLowerCase(),
