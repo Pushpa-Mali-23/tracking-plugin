@@ -7,14 +7,14 @@ import { setApiUrls, sendActivity } from './api';
 //console.log('Imported setUserId:', internalSetUserId); 
 (function(global) {
   try {
-    console.log("<<<<<<<<<<<timeout of 200");
+    console.log("<<<<<<<<<<<timeout of 300");
     // Initialize session and activity tracking
     initializeSession();
     //initActivityTracking();
     // Wait for a short duration before calling initActivityTracking
     setTimeout(() => {
       initActivityTracking();
-    }, 200); // Adjust the delay as needed (e.g., 100ms)
+    }, 300); // Adjust the delay as needed (e.g., 100ms)
 
     // Expose global functions
     global.TrackingPlugin = {
