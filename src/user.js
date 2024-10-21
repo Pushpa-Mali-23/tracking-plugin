@@ -2,16 +2,23 @@
 import { getSessionId, sendActivity, updateSessionUserId } from "./api";
 
 export function getUserId() {
-  const storageKey = "user_id";
+  let storageKey = "user_id";
   let userId = getCookie(storageKey) || localStorage.getItem(storageKey);
-//   if (!userId) {
-//     userId = generateUniqueId();
+  let tempUserId = null;
+  if (!userId) {
+    tempUserId = generateUniqueId();
+    storageKey = "temp_contact_id"
+    setCookie(storageKey, tempUserId, 365); //expires in 1 year
+    localStorage.setItem(storageKey, tempUserId);
+  }else {
+    tempUserId = getCookie("temp_contact_id") || localStorage.getItem("temp_contact_id");
+  }
 
-//     setCookie(storageKey, userId, 365); //expires in 1 year
-//     localStorage.setItem(storageKey, userId);
-//   }
-
-  return userId;
+  //return userId;
+  return {
+    userId,
+    tempUserId
+  };
 }
 
 export async function setUserId(userId) {

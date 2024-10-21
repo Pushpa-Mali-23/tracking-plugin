@@ -19,14 +19,21 @@ export function initializeSession() {
 }
 
 function createNewSession() {
-  console.log("craeting new sessionnnnnnnnnnnnnnnnnnnnnnnnnnnn")
+  console.log("craeting new sessionnnnnnnnnnnnnnnnnnnnnnnnnnnn3")
   // Gather necessary session data
-  const user_id=getUserId();
-  console.log(user_id,"1");
-  console.log(typeof user_id,"typeof used");
-  console.log(typeof parseInt(user_id),"typeof used");
+  //const user_id=getUserId();
+
+  const {userId, tempUserId} = getUserId();
+  console.log({userId, tempUserId}, "<<<<<<<<<<<<<<<<<<<<<<User IDS");
+  //console.log(user_id,"1");
+  //console.log(typeof user_id,"typeof used");
+  //console.log(typeof parseInt(user_id),"typeof used");
+  const contactId = userId ? parseInt(userId) : null; 
+  const tempId = userId ? parseInt(tempUserId) : null; 
   const sessionData = {
-    contact_id: parseInt(user_id),
+    //contact_id: parseInt(user_id),
+    contact_id: contactId,
+    temp_contact_id : tempId,
     ip_address: getUserIP(), // Implement getUserIP if needed
     coordinates: getUserCoordinates(), // Implement geolocation if needed
     city: getUserCity(), // Implement geolocation or use a service

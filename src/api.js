@@ -32,12 +32,14 @@ export function sendSession(data) {
     //time_spent: data.time_spent || null,
     channel: data.channel || null,
     referrer: data.referrer || document.referrer,
-    ...data.contact_id && { contact_id: parseInt(getUserId()) }, // Include contact_id if it has a value
+    //...data.contact_id && { contact_id: parseInt(getUserId()) }, // Include contact_id if it has a value
+    ...data.contact_id && { contact_id: parseInt(data.contact_id) }, // Include contact_id if it has a value
+    ...data.temp_contact_id && { temp_contact_id: parseInt(data.temp_contact_id)},
     ...data.session_end && { session_end: data.session_end }, // Include if it has a value
     ...data.time_spent && { time_spent: data.time_spent }, // Include if it has a value
   };
 
-  console.log(payload,"<<<<<<<<<<<<<<<<<<<<<<<<<<<payload");
+  console.log(payload,"<<<<<<<<<<<<<<<<<<<<<<<<<<<payload2");
 
   fetch(SESSION_API_URL, {
     method: "POST",
@@ -52,6 +54,8 @@ export function sendSession(data) {
   })
     .then((response) => response.json())
     .then((data) => {
+      console.log(data,"<<<<<<<<<data>>>>>>>>>");
+      console.log(data?.data?.id,"<<<<<<<<<data id>>>>>>>>>");
       // Optionally handle response data, such as storing session_id
       if (data?.data?.id) {
         // Store session_id in localStorage or cookies
@@ -133,7 +137,7 @@ export function sendActivity(activityType,additionalData = {}, typeId = null ) {
 
 // Utility functions to manage session_id
 export function setSessionId(id) {
- // console.log("settting session id in storage");
+  console.log("settting session id in storage");
   const storageKey = "session_id";
   setCookie(storageKey, id, 30); // Expires in 30 minutes
   localStorage.setItem(storageKey, id);
