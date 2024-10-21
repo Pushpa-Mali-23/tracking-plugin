@@ -19,17 +19,17 @@ export function initializeSession() {
 }
 
 function createNewSession() {
-  console.log("craeting new sessionnnnnnnnnnnnnnnnnnnnnnnnnnnn3")
+  //console.log("craeting new sessionnnnnnnnnnnnnnnnnnnnnnnnnnnn3")
   // Gather necessary session data
   //const user_id=getUserId();
 
   const {userId, tempUserId} = getUserId();
-  console.log({userId, tempUserId}, "<<<<<<<<<<<<<<<<<<<<<<User IDS");
+  //console.log({userId, tempUserId}, "<<<<<<<<<<<<<<<<<<<<<<User IDS");
   //console.log(user_id,"1");
   //console.log(typeof user_id,"typeof used");
   //console.log(typeof parseInt(user_id),"typeof used");
   const contactId = userId ? parseInt(userId) : null; 
-  const tempId = userId ? parseInt(tempUserId) : null; 
+  const tempId = tempUserId ? parseInt(tempUserId) : null; 
   const sessionData = {
     //contact_id: parseInt(user_id),
     contact_id: contactId,
@@ -56,7 +56,7 @@ export function resetSessionTimer() {
 }
 
 function handleSessionEnd() {
-  console.log("end session");
+  //console.log("end session");
   const sessionId = getSessionId();
   if (sessionId) {
     sendEndSession(sessionId);

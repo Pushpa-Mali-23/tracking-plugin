@@ -19,6 +19,7 @@ export function setApiUrls(urls) {
 }
 
 export function sendSession(data) {
+  //console.log(data,"<<<<<<<<<<<<<<<<<<<<<data in sendSession");
   const payload = {
     //contact_id: getUserId(), // Assuming user_id corresponds to contact_id
     ip_address: data.ip_address || null,
@@ -39,7 +40,7 @@ export function sendSession(data) {
     ...data.time_spent && { time_spent: data.time_spent }, // Include if it has a value
   };
 
-  console.log(payload,"<<<<<<<<<<<<<<<<<<<<<<<<<<<payload2");
+  //console.log(payload,"<<<<<<<<<<<<<<<<<<<<<<<<<<<payload2");
 
   fetch(SESSION_API_URL, {
     method: "POST",
@@ -54,8 +55,8 @@ export function sendSession(data) {
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log(data,"<<<<<<<<<data>>>>>>>>>");
-      console.log(data?.data?.id,"<<<<<<<<<data id>>>>>>>>>");
+      //console.log(data,"<<<<<<<<<data");
+      //console.log(data?.data?.id,"<<<<<<<<<data id");
       // Optionally handle response data, such as storing session_id
       if (data?.data?.id) {
         // Store session_id in localStorage or cookies
@@ -96,7 +97,7 @@ export function sendActivity(activityType,additionalData = {}, typeId = null ) {
   // console.log("hereeeee in send activity");
   // console.log(activityType,"<<activityType");
   // console.log(typeId,"<<typeId");
-  console.log(additionalData,"<<additionalData");
+  //console.log(additionalData,"<<additionalData");
   const session_id=parseInt(getSessionId());
     const payload = {
       session_id: session_id,
@@ -137,7 +138,7 @@ export function sendActivity(activityType,additionalData = {}, typeId = null ) {
 
 // Utility functions to manage session_id
 export function setSessionId(id) {
-  console.log("settting session id in storage");
+  //console.log("settting session id in storage");
   const storageKey = "session_id";
   setCookie(storageKey, id, 30); // Expires in 30 minutes
   localStorage.setItem(storageKey, id);
@@ -192,7 +193,7 @@ export function getSessionId() {
  * @returns {Promise<void>}
  */
 export async function updateSessionUserId(sessionId, userId) {
-  console.log("parseInt update");
+  //console.log("parseInt update");
   const url = `${SERVER_DOMAIN}/api/session/${sessionId}`;
   
   const payload = {

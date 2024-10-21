@@ -4,7 +4,7 @@ import { initActivityTracking } from './activities';
 import { setUserId as internalSetUserId} from './user';
 import { setApiUrls, sendActivity } from './api';
 
-console.log('Imported setUserId:', internalSetUserId); 
+//console.log('Imported setUserId:', internalSetUserId); 
 (function(global) {
   try {
     // Initialize session and activity tracking

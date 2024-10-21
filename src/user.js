@@ -6,6 +6,7 @@ export function getUserId() {
   let userId = getCookie(storageKey) || localStorage.getItem(storageKey);
   let tempUserId = null;
   if (!userId) {
+    //console.log("setting temp user id")
     tempUserId = generateUniqueId();
     storageKey = "temp_contact_id"
     setCookie(storageKey, tempUserId, 365); //expires in 1 year
@@ -65,11 +66,12 @@ export async function setUserId(userId) {
 }
 
 function generateUniqueId() {
-  return "xxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
-    const r = (Math.random() * 16) | 0,
-      v = c === "x" ? r : (r & 0x3) | 0x8;
-    return v.toString(16);
-  });
+  // return "xxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
+  //   const r = (Math.random() * 16) | 0,
+  //     v = c === "x" ? r : (r & 0x3) | 0x8;
+  //   return v.toString(16);
+  // });
+  return Math.floor(Math.random() * Math.pow(10, 16)); 
 }
 
 function setCookie(name, value, days) {
