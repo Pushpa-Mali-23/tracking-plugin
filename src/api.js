@@ -99,6 +99,7 @@ export function sendActivity(activityType,additionalData = {}, typeId = null ) {
   // console.log(typeId,"<<typeId");
   //console.log(additionalData,"<<additionalData");
   const session_id=parseInt(getSessionId());
+  console.log(session_id,"<<<<<<<<<<<<<<<<<<<<<<session id in send activity");
     const payload = {
       session_id: session_id,
       activity_data: {
