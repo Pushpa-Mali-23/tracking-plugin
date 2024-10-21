@@ -2,7 +2,8 @@
 import { getUserId } from './user';
 import { sendSession, sendEndSession, getSessionId, setSessionId, clearSessionId, clearUserId } from './api';
 
-const SESSION_TIMEOUT = 30 * 60 * 1000; // 30 minutes
+//const SESSION_TIMEOUT = 30 * 60 * 1000; // 30 minutes
+const SESSION_TIMEOUT = 60 * 60 * 1000; // 30 minutes
 
 let sessionTimer = null;
 
