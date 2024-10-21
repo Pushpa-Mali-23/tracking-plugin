@@ -8,6 +8,7 @@ const SESSION_TIMEOUT = 60 * 60 * 1000; // 30 minutes
 let sessionTimer = null;
 
 export function initializeSession() {
+  console.log("<<<<<<<<<<<<<<<<before unload event added");
   let sessionId = getSessionId();
   if (!sessionId) {
     createNewSession();
@@ -16,7 +17,7 @@ export function initializeSession() {
   }
 
   // Listen for page unload to end the session
-  //window.addEventListener('beforeunload', handleSessionEnd);
+  window.addEventListener('beforeunload', handleSessionEnd);
 }
 
 function createNewSession() {

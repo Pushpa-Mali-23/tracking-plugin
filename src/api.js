@@ -82,6 +82,7 @@ export function sendEndSession(sessionId, sessionEnd = null) {
       "apikey": WIDGET_ID,
     },
     body: JSON.stringify(payload),
+    keepalive: true,
   })
     .then((response) => response.json())
     .then((data) => {
