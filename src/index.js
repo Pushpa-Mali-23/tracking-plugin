@@ -9,7 +9,11 @@ import { setApiUrls, sendActivity } from './api';
   try {
     // Initialize session and activity tracking
     initializeSession();
-    initActivityTracking();
+    //initActivityTracking();
+    // Wait for a short duration before calling initActivityTracking
+    setTimeout(() => {
+      initActivityTracking();
+    }, 100); // Adjust the delay as needed (e.g., 100ms)
 
     // Expose global functions
     global.TrackingPlugin = {
