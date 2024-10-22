@@ -1,16 +1,16 @@
 // src/events.js
-import { sendActivity } from './api';
-import { getCssSelector } from './utils';
+import { sendActivity } from "./api";
+import { getCssSelector } from "./utils";
 
 export function initEventListeners() {
   // Clicks
-  document.addEventListener('click', function(event) {
-    const target = event.target.closest('a, button, input, select, textarea');
+  document.addEventListener("click", function (event) {
+    const target = event.target.closest("a, button, input, select, textarea");
     if (target) {
       //console.log("updateddd add event listener");
       // Determine if the target is a link (anchor) or a button with a redirection action
-      const isLink = target.tagName.toLowerCase() === 'a' && target.href;
-      const isButtonRedirect = target.tagName.toLowerCase() === 'button';
+      const isLink = target.tagName.toLowerCase() === "a" && target.href;
+      const isButtonRedirect = target.tagName.toLowerCase() === "button";
       let redirectUrl = null;
       //const originalLocation = window.location.href;
 
@@ -22,18 +22,18 @@ export function initEventListeners() {
         const originalLocation = window.location.href;
 
         // Add a temporary click event listener to detect the redirection
-        const checkRedirect = function() {
+        const checkRedirect = function () {
           const newLocation = window.location.href;
           if (newLocation !== originalLocation) {
             redirectUrl = newLocation;
           }
-          window.removeEventListener('click', checkRedirect);
+          window.removeEventListener("click", checkRedirect);
         };
 
-        window.addEventListener('click', checkRedirect);
+        window.addEventListener("click", checkRedirect);
       }
       //console.log(redirectUrl,"<<<<<<<<<<<<<<<<<<<<<<<<<<redirectUrl10");
-      sendActivity('click', {
+      sendActivity("click", {
         activity_data: {
           tag: target.tagName.toLowerCase(),
           id: target.id || null,
@@ -42,78 +42,76 @@ export function initEventListeners() {
           x: event.clientX,
           y: event.clientY,
           selector: getCssSelector(target),
-          redirect_url: redirectUrl
+          redirect_url: redirectUrl,
         },
         page_url: window.location.href,
-        type: 'click',
-        type_id: null // Define if applicable
+        type: "click",
+        type_id: null, // Define if applicable
       });
-     
+
       //return; // Exit early as the sendActivity will be called in the timeout
     }
-    
   });
 
-// export function initEventListeners() {
-//   document.addEventListener('click', function(event) {
-//     const target = event.target.closest('a, button, input, select, textarea');
-//     if (target) {
-//       console.log("Event Listener Triggered");
-//       const isLink = target.tagName.toLowerCase() === 'a' && target.href;
-//       const isButtonRedirect = target.tagName.toLowerCase() === 'button';
+  // export function initEventListeners() {
+  //   document.addEventListener('click', function(event) {
+  //     const target = event.target.closest('a, button, input, select, textarea');
+  //     if (target) {
+  //       console.log("Event Listener Triggered");
+  //       const isLink = target.tagName.toLowerCase() === 'a' && target.href;
+  //       const isButtonRedirect = target.tagName.toLowerCase() === 'button';
 
-//       let redirectUrl = null;
-//       const originalLocation = window.location.href;
+  //       let redirectUrl = null;
+  //       const originalLocation = window.location.href;
 
-//       if (isLink) {
-//         // Capture the href value for anchors
-//         redirectUrl = target.href;
-//       } else if (isButtonRedirect) {
-//         // Add a setTimeout to check for redirection after the click event
-//         setTimeout(() => {
-//           const newLocation = window.location.href;
-//           if (newLocation !== originalLocation) {
-//             redirectUrl = newLocation;
-//           }
-//           console.log(redirectUrl, "<<<<<<<<<<<<<<<< redirectUrl after button click 10");
-//           sendActivity('click', {
-//             activity_data: {
-//               tag: target.tagName.toLowerCase(),
-//               id: target.id || null,
-//               classes: target.className || null,
-//               text: target.innerText || null,
-//               x: event.clientX,
-//               y: event.clientY,
-//               selector: getCssSelector(target),
-//               redirect_url: redirectUrl
-//             },
-//             page_url: window.location.href,
-//             type: 'click',
-//             type_id: null
-//           });
-//         }, 100);
-//         return; // Exit early as the sendActivity will be called in the timeout
-//       }
+  //       if (isLink) {
+  //         // Capture the href value for anchors
+  //         redirectUrl = target.href;
+  //       } else if (isButtonRedirect) {
+  //         // Add a setTimeout to check for redirection after the click event
+  //         setTimeout(() => {
+  //           const newLocation = window.location.href;
+  //           if (newLocation !== originalLocation) {
+  //             redirectUrl = newLocation;
+  //           }
+  //           console.log(redirectUrl, "<<<<<<<<<<<<<<<< redirectUrl after button click 10");
+  //           sendActivity('click', {
+  //             activity_data: {
+  //               tag: target.tagName.toLowerCase(),
+  //               id: target.id || null,
+  //               classes: target.className || null,
+  //               text: target.innerText || null,
+  //               x: event.clientX,
+  //               y: event.clientY,
+  //               selector: getCssSelector(target),
+  //               redirect_url: redirectUrl
+  //             },
+  //             page_url: window.location.href,
+  //             type: 'click',
+  //             type_id: null
+  //           });
+  //         }, 100);
+  //         return; // Exit early as the sendActivity will be called in the timeout
+  //       }
 
-//       console.log(redirectUrl, "<<<<<<<<<<<<<<<< redirectUrl for link");
-//       sendActivity('click', {
-//         activity_data: {
-//           tag: target.tagName.toLowerCase(),
-//           id: target.id || null,
-//           classes: target.className || null,
-//           text: target.innerText || null,
-//           x: event.clientX,
-//           y: event.clientY,
-//           selector: getCssSelector(target),
-//           redirect_url: redirectUrl
-//         },
-//         page_url: window.location.href,
-//         type: 'click',
-//         type_id: null
-//       });
-//     }
-//   });
-
+  //       console.log(redirectUrl, "<<<<<<<<<<<<<<<< redirectUrl for link");
+  //       sendActivity('click', {
+  //         activity_data: {
+  //           tag: target.tagName.toLowerCase(),
+  //           id: target.id || null,
+  //           classes: target.className || null,
+  //           text: target.innerText || null,
+  //           x: event.clientX,
+  //           y: event.clientY,
+  //           selector: getCssSelector(target),
+  //           redirect_url: redirectUrl
+  //         },
+  //         page_url: window.location.href,
+  //         type: 'click',
+  //         type_id: null
+  //       });
+  //     }
+  //   });
 
   // // Form Submissions
   // document.addEventListener('submit', function(event) {
@@ -141,11 +139,11 @@ export function initEventListeners() {
   //   const scrollPercent = (scrollTop) / (docHeight - winHeight) * 100;
   //   if (scrollPercent - lastScroll >= 10) { // Every 10%
   //     lastScroll = scrollPercent;
-  //     sendActivity('scroll_depth', { 
+  //     sendActivity('scroll_depth', {
   //       activity_data: { percentage: Math.floor(scrollPercent) },
   //       page_url: window.location.href,
   //       type: 'scroll_depth',
-  //       type_id: null 
+  //       type_id: null
   //     });
   //   }
   // });
@@ -153,18 +151,18 @@ export function initEventListeners() {
   // // Page Visibility
   // document.addEventListener('visibilitychange', function() {
   //   if (document.visibilityState === 'hidden') {
-  //     sendActivity('page_hidden', { 
+  //     sendActivity('page_hidden', {
   //       activity_data: { },
   //       page_url: window.location.href,
   //       type: 'page_hidden',
-  //       type_id: null 
+  //       type_id: null
   //     });
   //   } else if (document.visibilityState === 'visible') {
-  //     sendActivity('page_visible', { 
+  //     sendActivity('page_visible', {
   //       activity_data: { },
   //       page_url: window.location.href,
   //       type: 'page_visible',
-  //       type_id: null 
+  //       type_id: null
   //     });
   //   }
   // });

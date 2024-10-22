@@ -1,3 +1,13 @@
+export let WIDGET_ID;
+
+export function setWidgetId(widgetId) {
+  WIDGET_ID = widgetId;
+}
+
+export function getWidgetId() {
+  return WIDGET_ID;
+}
+
 export function parseUrl(url) {
   const segments = url.split("/").filter((seg) => seg);
   if (segments.length >= 2) {

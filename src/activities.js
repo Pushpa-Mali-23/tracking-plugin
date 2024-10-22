@@ -4,7 +4,7 @@ import { initEventListeners } from './events';
 import { parseUrl } from './utils';
 
 export function trackPageActivity() {
-  console.log("<< inside trackPageActvity");
+ 
   const url = window.location.pathname; // e.g., /products/diamond-ring-100
   const { category, identifier } = parseUrl(url); // Custom parser
   sendActivity('page_view', { 

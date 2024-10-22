@@ -8,17 +8,18 @@ export function getUserId() {
   if (!userId) {
     //console.log("setting temp user id")
     tempUserId = generateUniqueId();
-    storageKey = "temp_contact_id"
+    storageKey = "temp_contact_id";
     setCookie(storageKey, tempUserId, 365); //expires in 1 year
     localStorage.setItem(storageKey, tempUserId);
-  }else {
-    tempUserId = getCookie("temp_contact_id") || localStorage.getItem("temp_contact_id");
+  } else {
+    tempUserId =
+      getCookie("temp_contact_id") || localStorage.getItem("temp_contact_id");
   }
 
   //return userId;
   return {
     userId,
-    tempUserId
+    tempUserId,
   };
 }
 
@@ -28,41 +29,44 @@ export async function setUserId(userId) {
   setCookie(storageKey, userId, 365);
   localStorage.setItem(storageKey, userId);
   // Optionally, send an event indicating user login
-  // sendActivity('user_login', { 
-  //   activity_data: { 
-  //     user_id: userId 
+  // sendActivity('user_login', {
+  //   activity_data: {
+  //     user_id: userId
   //   },
   //   page_url: window.location.href,
   //   type: 'user_login',
-  //   type_id: null 
+  //   type_id: null
   // });
 
-   // Retrieve the current session ID
-   const sessionId = getSessionId();
-  
-   if (!sessionId) {
-     console.error('No active session found. Cannot associate user ID.');
-     return;
-   }
- 
-   try {
-     // Update the session with the user ID
-     await updateSessionUserId(sessionId, userId);
-     
-     // Optionally, send a user login activity
-     sendActivity('user_login', { 
-       activity_data: { 
-         user_id: userId 
-       },
-       page_url: window.location.href,
-       type: 'user_login',
-       type_id: null 
-     });
-     
-     //console.log(`User ID ${userId} associated with session ${sessionId} successfully.`);
-   } catch (error) {
-     console.error(`Error associating user ID ${userId} with session ${sessionId}:`, error);
-   }
+  // Retrieve the current session ID
+  const sessionId = getSessionId();
+
+  if (!sessionId) {
+    console.error("No active session found. Cannot associate user ID.");
+    return;
+  }
+
+  try {
+    // Update the session with the user ID
+    await updateSessionUserId(sessionId, userId);
+
+    // Optionally, send a user login activity
+    sendActivity("user_login", {
+      activity_data: {
+        user_id: userId,
+      },
+      page_url: window.location.href,
+      type: "user_login",
+      type_id: null,
+    });
+
+    //console.log(`User ID ${userId} associated with session ${sessionId} successfully.`);
+  } catch (error) {
+    console.error(
+      `Error associating user ID ${userId} with session ${sessionId}:`,
+      error
+    );
+  }
 }
 
 function generateUniqueId() {
@@ -71,7 +75,7 @@ function generateUniqueId() {
   //     v = c === "x" ? r : (r & 0x3) | 0x8;
   //   return v.toString(16);
   // });
-  return Math.floor(Math.random() * Math.pow(10, 16)); 
+  return Math.floor(Math.random() * Math.pow(10, 16));
 }
 
 function setCookie(name, value, days) {
