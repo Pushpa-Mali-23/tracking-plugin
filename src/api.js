@@ -1,7 +1,8 @@
 import { getUserId } from "./user";
 import { WIDGET_ID } from "./utils";
 
-let SERVER_DOMAIN = "http://localhost:8080";
+//let SERVER_DOMAIN = "http://localhost:8080";
+let SERVER_DOMAIN = "https://jwero-api-preprod.azurewebsites.net";
 let SESSION_API_URL = `${SERVER_DOMAIN}/api/session`;
 let ACTIVITY_API_URL = `${SERVER_DOMAIN}/api/activity`;
 let END_SESSION_API_URL = `${SERVER_DOMAIN}/api/session/end`; // End Session API
