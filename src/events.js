@@ -1,5 +1,6 @@
 // src/events.js
 import { sendActivity } from "./api";
+import { sendSocketActivity } from "./socket";
 import { getCssSelector } from "./utils";
 
 export function initEventListeners() {
@@ -33,7 +34,23 @@ export function initEventListeners() {
         window.addEventListener("click", checkRedirect);
       }
       //console.log(redirectUrl,"<<<<<<<<<<<<<<<<<<<<<<<<<<redirectUrl10");
-      sendActivity("click", {
+      // sendActivity("click", {
+      //   activity_data: {
+      //     tag: target.tagName.toLowerCase(),
+      //     id: target.id || null,
+      //     classes: target.className || null,
+      //     text: target.innerText || null,
+      //     x: event.clientX,
+      //     y: event.clientY,
+      //     selector: getCssSelector(target),
+      //     redirect_url: redirectUrl,
+      //   },
+      //   page_url: window.location.href,
+      //   type: "click",
+      //   type_id: null, // Define if applicable
+      // });
+
+      sendSocketActivity("click", {
         activity_data: {
           tag: target.tagName.toLowerCase(),
           id: target.id || null,

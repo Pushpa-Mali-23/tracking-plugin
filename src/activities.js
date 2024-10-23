@@ -1,13 +1,24 @@
 // src/activities.js
 import { sendActivity } from './api';
 import { initEventListeners } from './events';
+import { sendSocketActivity } from './socket';
 import { parseUrl } from './utils';
 
 export function trackPageActivity() {
  
   const url = window.location.pathname; // e.g., /products/diamond-ring-100
   const { category, identifier } = parseUrl(url); // Custom parser
-  sendActivity('page_view', { 
+  // sendActivity('page_view', { 
+  //   activity_data: { 
+  //     category, 
+  //     identifier 
+  //   },
+  //   page_url: window.location.href, 
+  //   type: category, // Assuming 'type' corresponds to 'category'
+  //   type_id: getTypeId(category, identifier) // Implement getTypeId based on your logic
+  // }); // uncomment this to send by api
+
+  sendSocketActivity('page_view', {
     activity_data: { 
       category, 
       identifier 
@@ -15,7 +26,7 @@ export function trackPageActivity() {
     page_url: window.location.href, 
     type: category, // Assuming 'type' corresponds to 'category'
     type_id: getTypeId(category, identifier) // Implement getTypeId based on your logic
-  });
+  })
 }
 
 export function initActivityTracking() {

@@ -1,5 +1,6 @@
 // src/user.js
 import { getSessionId, sendActivity, updateSessionUserId } from "./api";
+import { sendSocketActivity } from "./socket";
 
 export function getUserId() {
   let storageKey = "user_id";
@@ -24,7 +25,7 @@ export function getUserId() {
 }
 
 export async function setUserId(userId) {
-  //console.log(userId,"<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<userId");
+  
   const storageKey = "user_id";
   setCookie(storageKey, userId, 365);
   localStorage.setItem(storageKey, userId);
@@ -42,7 +43,7 @@ export async function setUserId(userId) {
   const sessionId = getSessionId();
 
   if (!sessionId) {
-    console.error("No active session found. Cannot associate user ID.");
+    //console.error("No active session found. Cannot associate user ID.");
     return;
   }
 
@@ -51,7 +52,15 @@ export async function setUserId(userId) {
     await updateSessionUserId(sessionId, userId);
 
     // Optionally, send a user login activity
-    sendActivity("user_login", {
+    // sendActivity("user_login", {
+    //   activity_data: {
+    //     user_id: userId,
+    //   },
+    //   page_url: window.location.href,
+    //   type: "user_login",
+    //   type_id: null,
+    // });
+    sendSocketActivity("user_login",{
       activity_data: {
         user_id: userId,
       },

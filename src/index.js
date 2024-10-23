@@ -3,12 +3,13 @@ import { initializeSession } from "./session";
 import { initActivityTracking } from "./activities";
 import { setUserId as internalSetUserId } from "./user";
 import { setApiUrls, sendActivity } from "./api";
-import socket from "./socket";
-import { setWidgetId as internalSetWidgetId } from "./utils";
+import socket, { sendSocketActivity } from "./socket";
+import { fetchGeolocation, setWidgetId as internalSetWidgetId } from "./utils";
 
 //console.log('Imported setUserId:', internalSetUserId);
 (function (global) {
   try {
+    fetchGeolocation();
     // Initialize session and activity tracking
     // initializeSession();
     // //initActivityTracking();
@@ -43,7 +44,8 @@ import { setWidgetId as internalSetWidgetId } from "./utils";
           );
           return;
         }
-        sendActivity(activityType, additionalData, typeId);
+        //sendActivity(activityType, additionalData, typeId);
+        sendSocketActivity(activityType, additionalData, typeId);
       },
       config: function (options) {
         if (options.apiUrl) {

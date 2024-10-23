@@ -7,13 +7,14 @@ import {
   setSessionId,
   clearSessionId,
   clearUserId,
-  updateLastActive,
   getSocketId,
   getTenantId,
 } from "./api";
+import socket from "./socket";
+import { fetchGeolocation } from "./utils";
 
 //const SESSION_TIMEOUT = 30 * 60 * 1000; // 30 minutes
-const SESSION_TIMEOUT = 60 * 60 * 1000; // 30 minutes
+const SESSION_TIMEOUT = 30 * 60 * 1000; // 30 minutes
 const INACTIVITY_TIMEOUT = 30 * 60 * 1000; // 30 minutes in milliseconds
 let inactivityTimer = null;
 let activityInterval = null;
@@ -31,17 +32,23 @@ function resetInactivityTimer() {
 
 export function initializeSession() {
   // Fetch the tenant ID before initializing the session
-  getTenantId().then((tenantId) => {
-    tenant_id = tenantId;
-  });
-  let sessionId = getSessionId();
-  if (!sessionId) {
-    createNewSession();
-  } else {
-    resetSessionTimer();
-    resetInactivityTimer();
-    initializeIntervalActivity();
-  }
+  getTenantId()
+    .then((tenantId) => {
+      tenant_id = tenantId;
+
+      // Now proceed with session initialization after tenant ID is fetched
+      let sessionId = getSessionId();
+      if (!sessionId) {
+        createNewSession();
+      } else {
+        resetSessionTimer();
+        resetInactivityTimer();
+        //initializeIntervalActivity();
+      }
+    })
+    .catch((error) => {
+      console.error("Error fetching tenant ID:", error);
+    });
 
   // Listen for page unload to end the session
   //window.addEventListener('beforeunload', handleSessionEnd);
@@ -55,45 +62,45 @@ function initializeIntervalActivity() {
 
   // Set an interval to send activity every 5 minutes (300000 milliseconds)
   activityInterval = setInterval(() => {
-    updateLastActive();
+    //updateLastActive();
     resetInactivityTimer();
   }, 5 * 60 * 1000); // 5 minutes in milliseconds
 }
 
 function createNewSession() {
-  //console.log("craeting new sessionnnnnnnnnnnnnnnnnnnnnnnnnnnn3")
-  // Gather necessary session data
-  //const user_id=getUserId();
   let socketId = getSocketId();
 
+  // Retrieve geolocation data from storage
+  const storedGeolocationData = JSON.parse(
+    localStorage.getItem("geolocationData")
+  );
+
+  // Extract individual geolocation values from storage, provide default values if not found
+  const { country_name, state, city, latitude, longitude, IPv4 } = storedGeolocationData || {};
+
   const { userId, tempUserId } = getUserId();
-  //console.log({userId, tempUserId}, "<<<<<<<<<<<<<<<<<<<<<<User IDS");
-  //console.log(user_id,"1");
-  //console.log(typeof user_id,"typeof used");
-  //console.log(typeof parseInt(user_id),"typeof used");
   const contactId = userId ? parseInt(userId) : null;
   const tempId = tempUserId ? parseInt(tempUserId) : null;
   const sessionData = {
     //contact_id: parseInt(user_id),
     contact_id: contactId,
     temp_contact_id: tempId,
-    ip_address: getUserIP(), // Implement getUserIP if needed
-    coordinates: getUserCoordinates(), // Implement geolocation if needed
-    city: getUserCity(), // Implement geolocation or use a service
-    state: getUserState(),
-    country: getUserCountry(),
+    ip_address: IPv4, // Implement getUserIP if needed
+    coordinates:  {latitude: latitude || 0, longitude: longitude || 0 }, // Implement geolocation if needed
+    city: city, // Implement geolocation or use a service
+    state: state,
+    country: country_name,
     channel: getChannel(), // Define how to determine the channel
     referrer: document.referrer,
     session_start: new Date().toISOString(),
     socket_id: socketId,
   };
-  //console.log(sessionData, "<<<<<<<<<<<<<<<<<<<<<<<<<<sessiondata");
 
   sendSession(sessionData);
   resetSessionTimer();
 
   resetInactivityTimer();
-  initializeIntervalActivity();
+  //initializeIntervalActivity();
 }
 
 export function resetSessionTimer() {
@@ -107,7 +114,14 @@ function handleSessionEnd() {
   //console.log("end session");
   const sessionId = getSessionId();
   if (sessionId) {
-    sendEndSession(sessionId);
+    //sendEndSession(sessionId);
+    socket.emit("endSession", {
+      //from:"beforeunload",
+      sessionId,
+      //socketId: socket.id,
+      //widgetId: "your-widget-id",
+      tenantId: tenant_id,
+    });
   }
   clearSessionId();
   clearUserId();

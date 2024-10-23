@@ -1,3 +1,5 @@
+import { tenant_id } from "./session";
+import socket from "./socket";
 import { getUserId } from "./user";
 import { WIDGET_ID } from "./utils";
 
@@ -21,9 +23,9 @@ export function setApiUrls(urls) {
 }
 
 export function sendSession(data) {
-  //console.log(data,"<<<<<<<<<<<<<<<<<<<<<data in sendSession");
   const payload = {
     //contact_id: getUserId(), // Assuming user_id corresponds to contact_id
+    tenant_id: tenant_id,
     ip_address: data.ip_address || null,
     coordinates: data.coordinates || null,
     city: data.city || null,
@@ -45,26 +47,35 @@ export function sendSession(data) {
     ...(data.socket_id && { socket_id: data.socket_id }), // Include if it has a value
   };
 
-  fetch(SESSION_API_URL, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "User-Agent": navigator.userAgent,
-      apikey: WIDGET_ID,
-      //"Authorization": `Bearer ${TOKEN}`
-    },
-    body: JSON.stringify(payload),
-    // credentials: 'include',
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      // Optionally handle response data, such as storing session_id
-      if (data?.data?.id) {
-        // Store session_id in localStorage or cookies
-        setSessionId(data.data.id);
-      }
-    })
-    .catch((err) => console.error("Session tracking failed:", err));
+  // fetch(SESSION_API_URL, {
+  //   method: "POST",
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //     "User-Agent": navigator.userAgent,
+  //     apikey: WIDGET_ID,
+  //     //"Authorization": `Bearer ${TOKEN}`
+  //   },
+  //   body: JSON.stringify(payload),
+  //   // credentials: 'include',
+  // })
+  //   .then((response) => response.json())
+  //   .then((data) => {
+  //     // Optionally handle response data, such as storing session_id
+  //     if (data?.data?.id) {
+  //       // Store session_id in localStorage or cookies
+  //       setSessionId(data.data.id);
+  //     }
+  //   })
+  //   .catch((err) => console.error("Session tracking failed:", err));
+
+  socket.emit("createSession", payload, (response) => {
+    if (response.success && response.data?.id) {
+      // Store session_id in localStorage or cookies
+      setSessionId(response.data.id);
+    } else {
+      //console.error("Session creation failed:", response.error || "Unknown error");
+    }
+  });
 }
 
 export function sendEndSession(sessionId, sessionEnd = null) {
@@ -96,7 +107,6 @@ export function sendEndSession(sessionId, sessionEnd = null) {
 
 export function sendActivity(activityType, additionalData = {}, typeId = null) {
   const session_id = parseInt(getSessionId());
-  console.log(session_id, "<<<<<<<<<<<<<<<<<<<<<<session id in send activity");
   const payload = {
     session_id: session_id,
     activity_data: {
@@ -223,30 +233,32 @@ export function getSocketId() {
  */
 export async function updateSessionUserId(sessionId, userId) {
   //console.log("parseInt update");
-  const url = `${SERVER_DOMAIN}/api/session/${sessionId}`;
+  //const url = `${SERVER_DOMAIN}/api/session/${sessionId}`;
 
   const payload = {
     id: parseInt(sessionId),
+    tenant_id: tenant_id,
     contact_id: parseInt(userId),
     user_agent: navigator.userAgent,
   };
 
   try {
-    const response = await fetch(url, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        apikey: WIDGET_ID,
-      },
-      body: JSON.stringify(payload),
-    });
+    // const response = await fetch(url, {
+    //   method: "PUT",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     apikey: WIDGET_ID,
+    //   },
+    //   body: JSON.stringify(payload),
+    // });
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(
-        `API responded with status ${response.status}: ${errorText}`
-      );
-    }
+    // if (!response.ok) {
+    //   const errorText = await response.text();
+    //   throw new Error(
+    //     `API responded with status ${response.status}: ${errorText}`
+    //   );
+    // }
+    socket.emit("updateSessionUserId", payload);
 
     //console.log(`Session ${sessionId} updated with user ID ${userId} successfully.`);
   } catch (error) {
@@ -258,26 +270,26 @@ export async function updateSessionUserId(sessionId, userId) {
   }
 }
 
-// Function to send activity to the server
-export async function updateLastActive() {
-  const sessionId = getSessionId();
-  if (!sessionId) return;
+// // Function to send activity to the server
+// export async function updateLastActive() {
+//   const sessionId = getSessionId();
+//   if (!sessionId) return;
 
-  try {
-    await fetch(`${SERVER_DOMAIN}/api/session/last_active`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        apikey: WIDGET_ID,
-      },
-      body: JSON.stringify({ session_id: sessionId }),
-      keepalive: true, // Ensures the request is sent even during unload
-    });
-    console.log(`Activity sent for session: ${sessionId}`);
-  } catch (err) {
-    console.error("Activity tracking failed:", err);
-  }
-}
+//   try {
+//     await fetch(`${SERVER_DOMAIN}/api/session/last_active`, {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json",
+//         apikey: WIDGET_ID,
+//       },
+//       body: JSON.stringify({ session_id: sessionId }),
+//       keepalive: true, // Ensures the request is sent even during unload
+//     });
+//     // console.log(`Activity sent for session: ${sessionId}`);
+//   } catch (err) {
+//     console.error("Activity tracking failed:", err);
+//   }
+// }
 
 export async function updateSocketId(sessionId, socketId) {
   const url = `${SERVER_DOMAIN}/api/session/${sessionId}`;
