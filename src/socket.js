@@ -3,8 +3,8 @@ import { getCookie, setCookie, tenant_id } from "./session";
 import { getSessionId, getSocketId, getTenantId, sendEndSession, updateSocketId } from "./api";
 
 // WebSocket URL
-//const SOCKET_URL = "wss://api.jwero.com";
-const SOCKET_URL = "http://localhost:8080";
+const SOCKET_URL = "wss://api.jwero.com";
+//const SOCKET_URL = "http://localhost:8080";
 
 // Initialize socket connection
 const socket = io(SOCKET_URL, {
