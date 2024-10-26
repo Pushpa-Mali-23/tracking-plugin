@@ -70,6 +70,7 @@ function initializeIntervalActivity() {
 }
 
 function createNewSession() {
+  console.log("in craete new session");
   let socketId = getSocketId();
 
   // Retrieve geolocation data from storage
