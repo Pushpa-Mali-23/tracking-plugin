@@ -4,6 +4,7 @@ import { getSessionId, getSocketId, getTenantId, sendEndSession, updateSocketId 
 
 // WebSocket URL
 const SOCKET_URL = "wss://api.jwero.com";
+//const SOCKET_URL = "https://api.jwero.com";
 //const SOCKET_URL = "wss://1804-2409-4080-3e82-d5f8-e9e0-de8d-f15b-f12e.ngrok-free.app";
 //const SOCKET_URL = "http://localhost:8080";
 
@@ -11,12 +12,14 @@ const SOCKET_URL = "wss://api.jwero.com";
 const socket = io(SOCKET_URL, {
   transports: ["websocket"], // WebSocket transport
   reconnection: true, // Enable reconnection
-  secure: true, // Secure connection
+  //secure: true, // Secure connection
 });
 
 // Log socket connection
 socket.on("connect", async () => {
   console.log("socket connected");
+  console.log(SOCKET_URL);
+ 
   //   console.log(
   //     "on every page refresh new socket id will be updated in db",
   //     socket.id
@@ -24,6 +27,7 @@ socket.on("connect", async () => {
   setCookie("socket_id", socket.id, 30); // Store socket ID in a cookie for 10 minutes
 
   const sessionId = getCookie("session_id"); // Get session ID from cookie
+  console.log(sessionId);
   const socketId = socket.id;
 
   if (sessionId) {

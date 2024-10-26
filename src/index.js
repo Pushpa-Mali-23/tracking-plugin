@@ -19,8 +19,9 @@ import { fetchGeolocation, setWidgetId as internalSetWidgetId } from "./utils";
     // }, 300); // Adjust the delay as needed (e.g., 100ms)
     // Connect the socket and wait for it to be ready
     socket.on("connect", () => {
+      console.log("socket connected in gloabl");
       // Initialize session with the socket ID
-      initializeSession(socket.id).then(() => {
+      initializeSession().then(() => {
         console.log("Setting activity");
         initActivityTracking();
       })
