@@ -32,6 +32,8 @@ function resetInactivityTimer() {
 
 export function initializeSession() {
   // Fetch the tenant ID before initializing the session
+  // Return a promise to signal completion
+  return new Promise((resolve, reject) => {
   getTenantId()
     .then((tenantId) => {
       tenant_id = tenantId;
@@ -39,23 +41,26 @@ export function initializeSession() {
       // Now proceed with session initialization after tenant ID is fetched
       let sessionId = getSessionId();
       if (!sessionId) {
-        console.log("creating new session");
-        createNewSession();
+        //createNewSession();
+        createNewSession().then(() => resolve());
       } else {
-        console.log("old session");
+        
         resetSessionTimer();
         resetInactivityTimer();
         //initializeIntervalActivity();
       }
+      resolve();
     })
     .catch((error) => {
       console.error("Error fetching tenant ID:", error);
+      reject(error);
     });
+  
 
   // Listen for page unload to end the session
   //window.addEventListener('beforeunload', handleSessionEnd);
+});
 }
-
 // Function to set interval-based activity tracking (every 5 minutes)
 function initializeIntervalActivity() {
   //console.log("INITIALZE INTERVAL ACTIVITY");
@@ -70,9 +75,9 @@ function initializeIntervalActivity() {
 }
 
 function createNewSession() {
-  console.log("in craete new session");
+  return new Promise((resolve) => {
   let socketId = getSocketId();
-
+  
   // Retrieve geolocation data from storage
   const storedGeolocationData = JSON.parse(
     localStorage.getItem("geolocationData")
@@ -99,11 +104,18 @@ function createNewSession() {
     socket_id: socketId,
   };
 
-  sendSession(sessionData);
-  resetSessionTimer();
+  // sendSession(sessionData);
+  // resetSessionTimer();
 
-  resetInactivityTimer();
+  // resetInactivityTimer();
   //initializeIntervalActivity();
+      // Send the session data
+      Promise.resolve(sendSession(sessionData)).then(() => {
+        resetSessionTimer();
+        resetInactivityTimer();
+        resolve(); // Resolve after sending session data and resetting timers
+      });
+    });
 }
 
 export function resetSessionTimer() {

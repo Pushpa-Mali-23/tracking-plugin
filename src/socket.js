@@ -3,8 +3,8 @@ import { getCookie, setCookie, tenant_id } from "./session";
 import { getSessionId, getSocketId, getTenantId, sendEndSession, updateSocketId } from "./api";
 
 // WebSocket URL
-const SOCKET_URL = "wss://api.jwero.com";
-//const SOCKET_URL = "wss://1804-2409-4080-3e82-d5f8-e9e0-de8d-f15b-f12e.ngrok-free.app";
+//const SOCKET_URL = "wss://api.jwero.com";
+const SOCKET_URL = "wss://1804-2409-4080-3e82-d5f8-e9e0-de8d-f15b-f12e.ngrok-free.app";
 //const SOCKET_URL = "http://localhost:8080";
 
 // Initialize socket connection
@@ -16,6 +16,7 @@ const socket = io(SOCKET_URL, {
 
 // Log socket connection
 socket.on("connect", async () => {
+  console.log("socket connected");
   //   console.log(
   //     "on every page refresh new socket id will be updated in db",
   //     socket.id
@@ -31,7 +32,6 @@ socket.on("connect", async () => {
       //await updateSocketId(sessionId, socketId);
       getTenantId()
       .then((tenantId) => {
-        console.log(tenantId);
 
         // Prepare payload
         const payload = {
@@ -67,12 +67,12 @@ socket.on("disconnect", (reason) => {
   //     console.warn("Session ID not found in cookies.");
   //   }
   //   if (sessionId) {
-  socket.emit("endSession", {
-    from: "socket",
-    sessionId,
-    socketId: socket.id,
-    widgetId: "your-widget-id",
-  });
+  // socket.emit("endSession", {
+  //   from: "socket",
+  //   sessionId,
+  //   socketId: socket.id,
+  //   widgetId: "your-widget-id",
+  // });
   //}
 });
 
@@ -91,12 +91,14 @@ window.addEventListener("beforeunload", (event) => {
 });
 
 export function sendSocketActivity(activityType, additionalData = {}, typeId=null){
+  const sendActivity = () => {
+
   const sessionId = getSessionId();
   const socketId = getSocketId();
   const tenantId = tenant_id;
 
   if(!socketId || !sessionId || !tenantId) {
-    //console.warn("Socket Id, Session Id or Tenant Id not found");
+    setTimeout(sendActivity, 200);
     return;
   }
 
@@ -117,6 +119,7 @@ export function sendSocketActivity(activityType, additionalData = {}, typeId=nul
   };
 
   socket.emit("userActivity", paylaod);
+};
+sendActivity();
 }
-
 export default socket;

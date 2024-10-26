@@ -5,7 +5,6 @@ import { sendSocketActivity } from './socket';
 import { parseUrl } from './utils';
 
 export function trackPageActivity() {
- 
   const url = window.location.pathname; // e.g., /products/diamond-ring-100
   const { category, identifier } = parseUrl(url); // Custom parser
   // sendActivity('page_view', { 

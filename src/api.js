@@ -4,7 +4,8 @@ import { getUserId } from "./user";
 import { WIDGET_ID } from "./utils";
 
 //let SERVER_DOMAIN = "http://localhost:8080";
-let SERVER_DOMAIN = "https://jwero-api-preprod.azurewebsites.net";
+//let SERVER_DOMAIN = "https://jwero-api-preprod.azurewebsites.net";
+let SERVER_DOMAIN = "https://1804-2409-4080-3e82-d5f8-e9e0-de8d-f15b-f12e.ngrok-free.app";
 let SESSION_API_URL = `${SERVER_DOMAIN}/api/session`;
 let ACTIVITY_API_URL = `${SERVER_DOMAIN}/api/activity`;
 let END_SESSION_API_URL = `${SERVER_DOMAIN}/api/session/end`; // End Session API
@@ -23,6 +24,7 @@ export function setApiUrls(urls) {
 }
 
 export function sendSession(data) {
+  return new Promise((resolve, reject) => {
   const payload = {
     //contact_id: getUserId(), // Assuming user_id corresponds to contact_id
     tenant_id: tenant_id,
@@ -67,14 +69,17 @@ export function sendSession(data) {
   //     }
   //   })
   //   .catch((err) => console.error("Session tracking failed:", err));
-
   socket.emit("createSession", payload, (response) => {
     if (response.success && response.data?.id) {
       // Store session_id in localStorage or cookies
       setSessionId(response.data.id);
+      resolve();
     } else {
+      console.error("Session creation failed:", response.error || "Unknown error");
+      reject(new Error(response.error || "Session creation failed"));
       //console.error("Session creation failed:", response.error || "Unknown error");
     }
+  });
   });
 }
 
@@ -149,6 +154,7 @@ export async function getTenantId() {
         headers: {
           Connection: "keep-alive",
           apikey: WIDGET_ID,
+          "ngrok-skip-browser-warning":"1"
         },
       }
     );

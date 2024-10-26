@@ -19,14 +19,20 @@ import { fetchGeolocation, setWidgetId as internalSetWidgetId } from "./utils";
     // }, 300); // Adjust the delay as needed (e.g., 100ms)
     // Connect the socket and wait for it to be ready
     socket.on("connect", () => {
-      console.log("<<<<< in socket.connect");
       // Initialize session with the socket ID
-      initializeSession(socket.id);
+      initializeSession(socket.id).then(() => {
+        console.log("Setting activity");
+        initActivityTracking();
+      })
+      .catch((error) => {
+        console.error("Error initializing session:", error);
+      });;
 
       // Wait for a short duration before calling initActivityTracking
-      setTimeout(() => {
-        initActivityTracking();
-      }, 600); // Adjust the delay as needed (e.g., 100ms)
+      // setTimeout(() => {
+      //   console.log("Setting activity");
+      //   initActivityTracking();
+      // }, 600); // Adjust the delay as needed (e.g., 100ms)
     });
 
     // Expose global functions
