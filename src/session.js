@@ -39,8 +39,10 @@ export function initializeSession() {
       // Now proceed with session initialization after tenant ID is fetched
       let sessionId = getSessionId();
       if (!sessionId) {
+        console.log("creating new session");
         createNewSession();
       } else {
+        console.log("old session");
         resetSessionTimer();
         resetInactivityTimer();
         //initializeIntervalActivity();
