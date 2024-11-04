@@ -37,7 +37,7 @@ export function initializeSession() {
   getTenantId()
     .then((tenantId) => {
       tenant_id = tenantId;
-      console.log(tenantId);
+      //console.log(tenantId);
       // Now proceed with session initialization after tenant ID is fetched
       let sessionId = getSessionId();
       if (!sessionId) {
@@ -77,7 +77,7 @@ function initializeIntervalActivity() {
 function createNewSession() {
   return new Promise((resolve) => {
   let socketId = getSocketId();
-  console.log(socketId);
+  //console.log(socketId);
   // Retrieve geolocation data from storage
   const storedGeolocationData = JSON.parse(
     localStorage.getItem("geolocationData")

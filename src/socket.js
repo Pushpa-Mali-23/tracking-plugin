@@ -17,8 +17,8 @@ const socket = io(SOCKET_URL, {
 
 // Log socket connection
 socket.on("connect", async () => {
-  console.log("socket connected");
-  console.log(SOCKET_URL);
+  //console.log("socket connected");
+  //console.log(SOCKET_URL);
  
   //   console.log(
   //     "on every page refresh new socket id will be updated in db",
@@ -27,7 +27,7 @@ socket.on("connect", async () => {
   setCookie("socket_id", socket.id, 30); // Store socket ID in a cookie for 10 minutes
 
   const sessionId = getCookie("session_id"); // Get session ID from cookie
-  console.log(sessionId);
+  //console.log(sessionId);
   const socketId = socket.id;
 
   if (sessionId) {

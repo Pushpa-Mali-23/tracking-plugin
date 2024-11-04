@@ -69,9 +69,9 @@ export function sendSession(data) {
   //     }
   //   })
   //   .catch((err) => console.error("Session tracking failed:", err));
-  console.log(payload,"<<<<<paylaod2");
+  //console.log(payload,"<<<<<paylaod2");
   socket.emit("createSession", payload, (response) => {
-    console.log(response,"<<<<<<<<response");
+    //console.log(response,"<<<<<<<<response");
     if (response.success && response.data?.id) {
       
       // Store session_id in localStorage or cookies
@@ -106,7 +106,7 @@ export function sendEndSession(sessionId, sessionEnd = null) {
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log("Session ended successfully:", data);
+      //console.log("Session ended successfully:", data);
       // Optionally, clear the session_id from storage
       //clearSessionId();
     })
