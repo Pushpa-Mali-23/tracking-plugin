@@ -72,6 +72,11 @@ export function getCssSelector(element) {
 
     if (response.ok) {
       const data = await response.json();
+      for(let key in data){
+        if(data[key] === "Not found"){
+          data[key] = null;
+        }
+      }
       localStorage.setItem("geolocationData", JSON.stringify(data));
     
       return data;
