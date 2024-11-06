@@ -110,9 +110,12 @@ export function sendSocketActivity(activityType, additionalData = {}, typeId=nul
     session_id : parseInt(sessionId),
     socket_id : socketId,
     tenant_id : tenantId,
+    // activity_data : {
+    //   activity_type : activityType,
+    //   ...additionalData,
+    // },
     activity_data : {
-      activity_type : activityType,
-      ...additionalData,
+      ...additionalData?.activity_data
     },
     page_url: additionalData?.page_url || window.location.href,
     type: activityType,

@@ -59,6 +59,13 @@
           console.error('TrackingPlugin is not available');
         }
       });
+      // window.addEventListener('DOMContentLoaded', () => {
+      //   const widgetId='N2cH/ZGTyBWNhUWfcWq7+g==';
+      //   if(widgetId && window.TrackingPlugin){
+      //     window.TrackingPlugin.setWidgetId('N2cH/ZGTyBWNhUWfcWq7+g==');
+      //   }
+       
+      //});
     </script>
 
     <!-- User Login Simulation -->
@@ -67,41 +74,41 @@
     <!-- Click Tracking -->
     <button id="clickBtn">Click Me!</button>
     <button onclick="window.location.href='https://www.example.com'">Redirect to Example</button>
-    <button id="redirectBtn">Redirect to Example 2</button>
+    <!-- <button id="redirectBtn">Redirect to Example 2</button> -->
     <a href="https://www.example.com">Go to Example</a>
 
     <!-- Custom Activity Tracking -->
     <button id="customActivityBtn">Track Custom Activity</button>
 
     <!-- Log Section -->
-    <h2>Plugin Logs:</h2>
-    <div class="log" id="pluginLog"></div>
+    <!-- <h2>Plugin Logs:</h2>
+    <div class="log" id="pluginLog"></div> -->
   </div>
 
   <!-- Testing Scripts -->
   <script>
     // Function to log messages to the log div
-    function logMessage(message) {
-      const logDiv = document.getElementById('pluginLog');
-      const timestamp = new Date().toLocaleTimeString();
-      logDiv.innerHTML += `<p>[${timestamp}] ${message}</p>`;
-      logDiv.scrollTop = logDiv.scrollHeight;
-    }
+    // function logMessage(message) {
+    //   const logDiv = document.getElementById('pluginLog');
+    //   const timestamp = new Date().toLocaleTimeString();
+    //   logDiv.innerHTML += `<p>[${timestamp}] ${message}</p>`;
+    //   logDiv.scrollTop = logDiv.scrollHeight;
+    // }
 
-    // Override fetch to log API calls
-    const originalFetch = window.fetch;
-    window.fetch = function(url, options) {
-      logMessage(`Fetch called with URL: ${url} | Method: ${options.method}`);
-      return originalFetch(url, options)
-        .then(response => {
-          logMessage(`Fetch response from ${url}: ${response.status} ${response.statusText}`);
-          return response;
-        })
-        .catch(error => {
-          logMessage(`Fetch error from ${url}: ${error}`);
-          throw error;
-        });
-    };
+    // // Override fetch to log API calls
+    // const originalFetch = window.fetch;
+    // window.fetch = function(url, options) {
+    //   logMessage(`Fetch called with URL: ${url} | Method: ${options.method}`);
+    //   return originalFetch(url, options)
+    //     .then(response => {
+    //       logMessage(`Fetch response from ${url}: ${response.status} ${response.statusText}`);
+    //       return response;
+    //     })
+    //     .catch(error => {
+    //       logMessage(`Fetch error from ${url}: ${error}`);
+    //       throw error;
+    //     });
+    // };
 
     // Handle user login
     document.getElementById('loginBtn').addEventListener('click', () => {
@@ -119,8 +126,10 @@
       const activityType = 'product_id';
       const typeId = 10; // Example product ID
       const additionalData = {
+        activity_data : {
         product_name: 'Diamond Ring',
         price: 299.99
+      }
       };
       if (window.TrackingPlugin && typeof window.TrackingPlugin.trackCustomActivity === 'function') {
         window.TrackingPlugin.trackCustomActivity(activityType, typeId, additionalData);
@@ -130,22 +139,22 @@
       }
     });
 
-    // Handle form submission
-    document.getElementById('testForm').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const inputValue = document.getElementById('inputField').value;
-      logMessage(`Form submitted with input: ${inputValue}`);
-    });
+    // // Handle form submission
+    // document.getElementById('testForm').addEventListener('submit', (e) => {
+    //   e.preventDefault();
+    //   const inputValue = document.getElementById('inputField').value;
+    //   logMessage(`Form submitted with input: ${inputValue}`);
+    // });
 
     // Initialize the Tracking Plugin after the script loads
-    window.addEventListener('load', () => {
-      if (window.TrackingPluginConfig && window.TrackingPluginConfig.config) {
-        window.TrackingPlugin.config(window.TrackingPluginConfig.config);
-        logMessage('Tracking Plugin configured.');
-      } else {
-        logMessage('No TrackingPluginConfig found.');
-      }
-    });
+    // window.addEventListener('load', () => {
+    //   if (window.TrackingPluginConfig && window.TrackingPluginConfig.config) {
+    //     window.TrackingPlugin.config(window.TrackingPluginConfig.config);
+    //     logMessage('Tracking Plugin configured.');
+    //   } else {
+    //     logMessage('No TrackingPluginConfig found.');
+    //   }
+    // });
 
     document.getElementById('redirectBtn').addEventListener('click', (e) => {
       e.preventDefault(); // Prevent immediate redirection
@@ -159,9 +168,9 @@
       }
 
       // Delay the actual redirection to allow the tracking to happen first
-      setTimeout(() => {
-        window.location.href = redirectUrl;
-      }, 500); // 500ms delay (adjust as needed)
+      // setTimeout(() => {
+      //   window.location.href = redirectUrl;
+      // }, 500); // 500ms delay (adjust as needed)
     });
   </script>
 </body>
