@@ -132,14 +132,25 @@ export function sendSocketActivity(activityType, additionalData = {}, typeId=nul
   if(additionalData?.activity_data?.userIsLoggedIn === true){
 
     // Check if the activityType is "page_view"
-    //console.log(activityType,"<<<<<<<<<Actiity type");
     if (activityType === "page_view" || activityType === "click") {
       const event_Triggers = eventTriggers; // Get event triggers
       //console.log(event_Triggers,"<<<<<<<<<<<<<<,eT");
-      const matchingTrigger = eventTriggers.find(trigger => trigger.event === activityType);
+      //working // const matchingTrigger = eventTriggers.find(trigger => trigger.event === activityType);
+      const matchingTrigger = event_Triggers.find(trigger => {
+        return (activityType === "page_view" && trigger.event === "page_view") ||
+               (activityType === "click" && trigger.event === "clicks");
+      });
+
       //console.log(matchingTrigger,"<<<<<<<<<<<<<<<<<<<matching trigger")
       if (matchingTrigger) {
-        const pageIdentifier = paylaod.activity_data?.identifier;
+        let pageIdentifier;
+
+        if(activityType === "click"){
+          pageIdentifier = additionalData?.activity_data?.text
+        } else{
+          pageIdentifier = paylaod.activity_data?.identifier;
+        }
+        
 
         // Check if the identifier exists in the event values for the "page_view" trigger
         if (matchingTrigger.values.includes(pageIdentifier)) {
