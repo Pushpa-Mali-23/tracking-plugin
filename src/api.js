@@ -4,7 +4,8 @@ import { getUserId } from "./user";
 import { WIDGET_ID } from "./utils";
 
 //let SERVER_DOMAIN = "http://localhost:8080";
-let SERVER_DOMAIN = "https://jwero-api-preprod.azurewebsites.net";
+//let SERVER_DOMAIN = "https://jwero-api-preprod.azurewebsites.net";
+let SERVER_DOMAIN = "https://api.jwero.com";
 //let SERVER_DOMAIN = "https://1804-2409-4080-3e82-d5f8-e9e0-de8d-f15b-f12e.ngrok-free.app";
 let SESSION_API_URL = `${SERVER_DOMAIN}/api/session`;
 let ACTIVITY_API_URL = `${SERVER_DOMAIN}/api/activity`;
@@ -200,7 +201,7 @@ export async function fetchTriggers() {
       eventTriggers = data.data
       .filter(item => 
         ['PAGE_VIEW', 'PRODUCT_VIEW', 'CLICKS'].includes(item.event_name) && 
-        item.meta_data && item.meta_data.values
+        item.meta_data && item.meta_data.event_values
       )
       .map(item => ({
         event: item.event_name.toLowerCase(),
@@ -209,7 +210,7 @@ export async function fetchTriggers() {
           : [item.meta_data.event_values] // Handle single text value as an array
       }));
 
-      //console.log(eventTriggers, "<<<<<<< filtered event triggers");
+      console.log(eventTriggers, "<<<<<<< filtered event triggers");
       //console.log(eventTriggers[0].values.length, "<<<<<<< filtered event triggers");
       //return data;
     } catch (error) {

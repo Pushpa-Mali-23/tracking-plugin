@@ -130,7 +130,7 @@ export function sendSocketActivity(activityType, additionalData = {}, typeId=nul
   };
 
   if(additionalData?.activity_data?.userIsLoggedIn === true){
-
+    console.log("<<<<user is logged in");
     // Check if the activityType is "page_view"
     if (activityType === "page_view" || activityType === "click") {
       const event_Triggers = eventTriggers; // Get event triggers
@@ -141,14 +141,17 @@ export function sendSocketActivity(activityType, additionalData = {}, typeId=nul
                (activityType === "click" && trigger.event === "clicks");
       });
 
-      //console.log(matchingTrigger,"<<<<<<<<<<<<<<<<<<<matching trigger")
+      console.log(matchingTrigger,"<<<<<<<<<<<<<<<<<<<matching trigger")
       if (matchingTrigger) {
         let pageIdentifier;
 
         if(activityType === "click"){
+          console.log("<<<< click");
           pageIdentifier = additionalData?.activity_data?.text
         } else{
+          console.log("<<<< page_view as identifier")
           pageIdentifier = paylaod.activity_data?.identifier;
+          console.log(pageIdentifier,"<<<<<<<<<<<<<<<<<page Identifier");
         }
         
 
