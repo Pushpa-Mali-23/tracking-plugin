@@ -1,6 +1,7 @@
 // src/events.js
 import { sendActivity } from "./api";
 import { sendSocketActivity } from "./socket";
+import { getUserId } from "./user";
 import { getCssSelector } from "./utils";
 
 export function initEventListeners() {
@@ -50,6 +51,12 @@ export function initEventListeners() {
       //   type_id: null, // Define if applicable
       // });
 
+      let userIsLoggedIn=false;
+      const userData = getUserId();
+      if(userData?.userId){
+        userIsLoggedIn = true
+      }
+
       sendSocketActivity("click", {
         activity_data: {
           tag: target.tagName.toLowerCase(),
@@ -60,6 +67,7 @@ export function initEventListeners() {
           y: event.clientY,
           selector: getCssSelector(target),
           redirect_url: redirectUrl,
+          userIsLoggedIn,
         },
         page_url: window.location.href,
         type: "click",

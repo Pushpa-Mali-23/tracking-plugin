@@ -2,6 +2,7 @@
 import { sendActivity } from './api';
 import { initEventListeners } from './events';
 import { sendSocketActivity } from './socket';
+import { getUserId } from './user';
 import { parseUrl } from './utils';
 
 export function trackPageActivity() {
@@ -17,10 +18,17 @@ export function trackPageActivity() {
   //   type_id: getTypeId(category, identifier) // Implement getTypeId based on your logic
   // }); // uncomment this to send by api
 
+  let userIsLoggedIn=false;
+  const userData = getUserId();
+  if(userData?.userId){
+    userIsLoggedIn = true
+  }
+
   sendSocketActivity('page_view', {
     activity_data: { 
       category, 
-      identifier 
+      identifier,
+      userIsLoggedIn
     },
     page_url: window.location.href, 
     type: category, // Assuming 'type' corresponds to 'category'

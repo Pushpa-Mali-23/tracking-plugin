@@ -9,6 +9,7 @@ import {
   clearUserId,
   getSocketId,
   getTenantId,
+  fetchTriggers,
 } from "./api";
 import socket from "./socket";
 import { fetchGeolocation } from "./utils";

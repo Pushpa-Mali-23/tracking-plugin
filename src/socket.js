@@ -1,6 +1,7 @@
 import { io } from "socket.io-client";
 import { getCookie, setCookie, tenant_id } from "./session";
-import { getSessionId, getSocketId, getTenantId, sendEndSession, updateSocketId } from "./api";
+import { eventTriggers, getEventTriggers, getSessionId, getSocketId, getTenantId, sendEndSession, updateSocketId } from "./api";
+import { getUserId } from "./user";
 
 // WebSocket URL
 const SOCKET_URL = "wss://api.jwero.com";
@@ -95,16 +96,19 @@ window.addEventListener("beforeunload", (event) => {
 });
 
 export function sendSocketActivity(activityType, additionalData = {}, typeId=null){
+  //console.log(additionalData?.activity_data,"<<<<<Additional Data");
   const sendActivity = () => {
 
   const sessionId = getSessionId();
   const socketId = getSocketId();
   const tenantId = tenant_id;
+  const {userId} = getUserId();
 
   if(!socketId || !sessionId || !tenantId) {
     setTimeout(sendActivity, 200);
     return;
   }
+
 
   const paylaod = {
     session_id : parseInt(sessionId),
@@ -124,6 +128,45 @@ export function sendSocketActivity(activityType, additionalData = {}, typeId=nul
       ? { type_id: typeId || additionalData?.type_id }
       : {}),
   };
+
+  if(additionalData?.activity_data?.userIsLoggedIn === true){
+
+    // Check if the activityType is "page_view"
+    //console.log(activityType,"<<<<<<<<<Actiity type");
+    if (activityType === "page_view") {
+      const event_Triggers = eventTriggers; // Get event triggers
+      //console.log(event_Triggers,"<<<<<<<<<<<<<<,eT");
+      const matchingTrigger = eventTriggers.find(trigger => trigger.event === "page_view");
+      //console.log(matchingTrigger,"<<<<<<<<<<<<<<<<<<<matching trigger")
+      if (matchingTrigger) {
+        const pageIdentifier = paylaod.activity_data?.identifier;
+
+        // Check if the identifier exists in the event values for the "page_view" trigger
+        if (matchingTrigger.values.includes(pageIdentifier)) {
+          const {userId} = getUserId();
+          // If there's a match, trigger the event
+          const trigger_payload = {
+            tenant_id : tenantId,
+            event_name: activityType.toUpperCase(),
+            users:[{
+              id: parseInt(userId),
+              type: "CRM",
+            }]
+          }
+          //console.log("<<<<<<<<<<<<<<<<<<<<<<<<sending trigger event>>>>>>>>>>>>>>>>>>>>>>>>")
+          socket.emit("handleEventTrigger", trigger_payload);
+          delete paylaod?.activity_data?.userIsLoggedIn;
+        }
+      }
+    } 
+
+    // const triggerPayload = {
+    //   user_id : userId,
+    //   event_name : activityType,
+    // }
+    // socket.emit("handleEventTrigger",triggerPayload);
+    // delete paylaod?.activity_data.handleEventTrigger;
+  }
 
   socket.emit("userActivity", paylaod);
 };

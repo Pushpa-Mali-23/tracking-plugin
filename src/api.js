@@ -11,6 +11,8 @@ let ACTIVITY_API_URL = `${SERVER_DOMAIN}/api/activity`;
 let END_SESSION_API_URL = `${SERVER_DOMAIN}/api/session/end`; // End Session API
 //let WIDGET_ID = "N2cH/ZGTyBWNhUWfcWq7+g==";
 
+export let eventTriggers = [];
+
 export function setApiUrls(urls) {
   if (urls?.sessionUrl) {
     SESSION_API_URL = urls.sessionUrl;
@@ -176,6 +178,48 @@ export async function getTenantId() {
     console.error("Error fetching tenant ID:", error);
     throw error;
   }
+}
+
+export async function fetchTriggers() {
+  const {userId} = getUserId();
+
+    try {
+      const response = await fetch(`${SERVER_DOMAIN}/flow?type=trigger&page=1&per_page=100`, {
+        method: 'GET',
+        headers: {
+          Connection: "keep-alive",
+          apikey: WIDGET_ID,
+          "ngrok-skip-browser-warning":"1"
+        },
+      });
+
+      const data = await response.json();
+      //console.log(data.data[0].meta_data,"<<<<<<<triggers data1");
+
+      // Filter and store events with specific event_name and values data
+      eventTriggers = data.data
+      .filter(item => 
+        ['PAGE_VIEW', 'PRODUCT_VIEW', 'CLICKS'].includes(item.event_name) && 
+        item.meta_data && item.meta_data.values
+      )
+      .map(item => ({
+        event: item.event_name.toLowerCase(),
+        values: Array.isArray(item.meta_data.event_values)
+          ? item.meta_data.event_values.map(value => value.value) // Extract values from dropdown items
+          : [item.meta_data.event_values] // Handle single text value as an array
+      }));
+
+      //console.log(eventTriggers, "<<<<<<< filtered event triggers");
+      //console.log(eventTriggers[0].values.length, "<<<<<<< filtered event triggers");
+      //return data;
+    } catch (error) {
+      console.error('Failed to fetch triggers:', error);
+    }
+  
+}
+
+export async function getEventTriggers() {
+  return eventTriggers;
 }
 
 // Utility functions to manage session_id

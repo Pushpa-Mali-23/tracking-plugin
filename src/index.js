@@ -2,7 +2,7 @@
 import { initializeSession } from "./session";
 import { initActivityTracking } from "./activities";
 import { setUserId as internalSetUserId } from "./user";
-import { setApiUrls, sendActivity } from "./api";
+import { setApiUrls, sendActivity, fetchTriggers } from "./api";
 import socket, { sendSocketActivity } from "./socket";
 import { fetchGeolocation, setWidgetId as internalSetWidgetId } from "./utils";
 
@@ -10,6 +10,7 @@ import { fetchGeolocation, setWidgetId as internalSetWidgetId } from "./utils";
 (function (global) {
   try {
     fetchGeolocation();
+   
     // Initialize session and activity tracking
     // initializeSession();
     // //initActivityTracking();
@@ -18,23 +19,44 @@ import { fetchGeolocation, setWidgetId as internalSetWidgetId } from "./utils";
     //   initActivityTracking();
     // }, 300); // Adjust the delay as needed (e.g., 100ms)
     // Connect the socket and wait for it to be ready
-    socket.on("connect", () => {
-      //console.log("socket connected in gloabl");
-      // Initialize session with the socket ID
-      initializeSession().then(() => {
-        //console.log("Setting activity");
-        initActivityTracking();
-      })
-      .catch((error) => {
-        console.error("Error initializing session:", error);
-      });;
+    //working
+    // socket.on("connect", () => {
+    //   //console.log("socket connected in gloabl");
+    //   // Initialize session with the socket ID
+    //   initializeSession().then(() => {
+    //     //console.log("Setting activity");
+        
+    //     initActivityTracking();
+       
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error initializing session:", error);
+    //   });;
 
-      // Wait for a short duration before calling initActivityTracking
-      // setTimeout(() => {
-      //   console.log("Setting activity");
-      //   initActivityTracking();
-      // }, 600); // Adjust the delay as needed (e.g., 100ms)
+    //   // Wait for a short duration before calling initActivityTracking
+    //   // setTimeout(() => {
+    //   //   console.log("Setting activity");
+    //   //   initActivityTracking();
+    //   // }, 600); // Adjust the delay as needed (e.g., 100ms)
+    // });
+    //working-end
+
+    socket.on("connect", async () => {
+      try {
+        // Initialize session with the socket ID
+        await initializeSession();
+    
+        // Fetch triggers and wait for it to complete before moving to activity tracking
+        await fetchTriggers();
+    
+        // Initialize activity tracking
+        initActivityTracking();
+    
+      } catch (error) {
+        console.error("Error during initialization:", error);
+      }
     });
+    
 
     // Expose global functions
     global.TrackingPlugin = {
