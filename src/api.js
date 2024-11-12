@@ -204,7 +204,7 @@ export async function fetchTriggers() {
         item.meta_data && item.meta_data.event_values
       )
       .map(item => ({
-        id: item.id,
+        id: item?.id,
         event: item.event_name.toLowerCase(),
         values: Array.isArray(item.meta_data.event_values)
           ? item.meta_data.event_values.map(value => value.value) // Extract values from dropdown items

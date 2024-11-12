@@ -166,7 +166,7 @@ export function sendSocketActivity(activityType, additionalData = {}, typeId=nul
               id: parseInt(userId),
               type: "CRM",
             }],
-            trigger_id: matchingTrigger.id
+            trigger_id: matchingTrigger?.id
           }
           //console.log("<<<<<<<<<<<<<<<<<<<<<<<<sending trigger event>>>>>>>>>>>>>>>>>>>>>>>>")
           socket.emit("handleEventTrigger", trigger_payload);
