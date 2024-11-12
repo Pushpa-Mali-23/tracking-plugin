@@ -134,7 +134,7 @@ export function sendSocketActivity(activityType, additionalData = {}, typeId=nul
     // Check if the activityType is "page_view"
     if (activityType === "page_view" || activityType === "click") {
       const event_Triggers = eventTriggers; // Get event triggers
-      //console.log(event_Triggers,"<<<<<<<<<<<<<<,eT");
+      console.log(event_Triggers,"<<<<<<<<<<<<<<event_Triggers");
       //working // const matchingTrigger = eventTriggers.find(trigger => trigger.event === activityType);
       const matchingTrigger = event_Triggers.find(trigger => {
         return (activityType === "page_view" && trigger.event === "page_view") ||
