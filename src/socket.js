@@ -182,7 +182,7 @@ export function sendSocketActivity(activityType, additionalData = {}, typeId=nul
     // socket.emit("handleEventTrigger",triggerPayload);
     // delete paylaod?.activity_data.handleEventTrigger;
   }
-
+  console.log(paylaod,"<<<<<<<<<<<<<<<<<<<<<<<<<<payload")
   socket.emit("userActivity", paylaod);
 };
 sendActivity();

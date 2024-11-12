@@ -71,7 +71,7 @@ export function initEventListeners() {
         },
         page_url: window.location.href,
         type: "click",
-        type_id: null, // Define if applicable
+        type_id: target.innerText, // Define if applicable
       });
 
       //return; // Exit early as the sendActivity will be called in the timeout
