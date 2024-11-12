@@ -133,10 +133,10 @@ export function sendSocketActivity(activityType, additionalData = {}, typeId=nul
 
     // Check if the activityType is "page_view"
     //console.log(activityType,"<<<<<<<<<Actiity type");
-    if (activityType === "page_view") {
+    if (activityType === "page_view" || activityType === "click") {
       const event_Triggers = eventTriggers; // Get event triggers
       //console.log(event_Triggers,"<<<<<<<<<<<<<<,eT");
-      const matchingTrigger = eventTriggers.find(trigger => trigger.event === "page_view");
+      const matchingTrigger = eventTriggers.find(trigger => trigger.event === activityType);
       //console.log(matchingTrigger,"<<<<<<<<<<<<<<<<<<<matching trigger")
       if (matchingTrigger) {
         const pageIdentifier = paylaod.activity_data?.identifier;
