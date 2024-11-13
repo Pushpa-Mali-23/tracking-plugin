@@ -1,7 +1,8 @@
 import { io } from "socket.io-client";
-import { getCookie, setCookie, tenant_id } from "./session";
-import { eventTriggers, getEventTriggers, getSessionId, getSocketId, getTenantId, sendEndSession, updateSocketId } from "./api";
+import { getCookie, initializeSession, setCookie, tenant_id } from "./session";
+import { eventTriggers, fetchTriggers, getEventTriggers, getSessionId, getSocketId, getTenantId, sendEndSession, updateSocketId } from "./api";
 import { getUserId } from "./user";
+import { initActivityTracking } from "./activities";
 
 // WebSocket URL
 const SOCKET_URL = "wss://api.jwero.com";
@@ -18,6 +19,7 @@ const socket = io(SOCKET_URL, {
 
 // Log socket connection
 socket.on("connect", async () => {
+  console.log("<<<<<<<<<<<<<<<<<<<<in socket.js>>>>>>>>>>>>>>>>>>>>")
   //console.log("socket connected");
   //console.log(SOCKET_URL);
  
@@ -56,7 +58,7 @@ socket.on("connect", async () => {
     } catch (error) {
       console.error("Error updating session user ID:", error);
     }
-  } 
+  }
 });
 
 socket.on("connect_error", (err) => {
