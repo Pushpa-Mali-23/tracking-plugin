@@ -74,7 +74,7 @@ export function sendSession(data) {
   //   .catch((err) => console.error("Session tracking failed:", err));
   //console.log(payload,"<<<<<paylaod2");
   socket.emit("createSession", payload, (response) => {
-    //console.log(response,"<<<<<<<<response");
+    console.log(response,"<<<<<<<<response");
     if (response.success && response.data?.id) {
       
       // Store session_id in localStorage or cookies
