@@ -151,9 +151,20 @@ export function sendActivity(activityType, additionalData = {}, typeId = null) {
 }
 //}
 
-export async function getTenantId() {
+export async function getTenantId(retryCount = 10, delay = 1000) {
   console.log(WIDGET_ID,"<<<<<<<<<<in getTenantId widget id>>>>>>>>>>")
   console.log("<<<<<<<<<<in getTenantId>>>>>>>>>>")
+
+  // Retry if WIDGET_ID is undefined
+  while (typeof WIDGET_ID === "undefined" && retryCount > 0) {
+    console.warn(retryCount,"WIDGET_ID is undefined. Retrying...");
+    await new Promise(resolve => setTimeout(resolve, delay));
+    retryCount--;
+  }
+
+  if (typeof WIDGET_ID === "undefined") {
+    throw new Error("WIDGET_ID is still undefined after retries.");
+  }
   try {
     const response = await fetch(
       `${SERVER_DOMAIN}/tenant_utils/get_tenant_id`,
