@@ -152,6 +152,7 @@ export function sendActivity(activityType, additionalData = {}, typeId = null) {
 //}
 
 export async function getTenantId() {
+  console.log(WIDGET_ID,"<<<<<<<<<<in getTenantId widget id>>>>>>>>>>")
   console.log("<<<<<<<<<<in getTenantId>>>>>>>>>>")
   try {
     const response = await fetch(
