@@ -38,11 +38,9 @@ export function initializeSession() {
   getTenantId()
     .then((tenantId) => {
       tenant_id = tenantId;
-      console.log(tenantId,"<<<<<<<<<<<< in initializeSession");
       // Now proceed with session initialization after tenant ID is fetched
       let sessionId = getSessionId();
       if (!sessionId) {
-        console.log("!session id");
         //createNewSession();
         createNewSession().then(() => resolve());
       } else {

@@ -42,10 +42,9 @@ import { fetchGeolocation, setWidgetId as internalSetWidgetId } from "./utils";
     //working-end
 
     socket.on("connect", async () => {
-      console.log("<<<<<<<<<<<<<<<<<<<<<<in global function>>>>>>>>>>>>>>>>>>>>>>")
+      
       try {
         // Initialize session with the socket ID
-        console.log("<<<<<<intializing session>>>>>>")
         await initializeSession();
     
         // Fetch triggers and wait for it to complete before moving to activity tracking

@@ -74,7 +74,7 @@ export function sendSession(data) {
   //   .catch((err) => console.error("Session tracking failed:", err));
   //console.log(payload,"<<<<<paylaod2");
   socket.emit("createSession", payload, (response) => {
-    console.log(response,"<<<<<<<<response");
+    
     if (response.success && response.data?.id) {
       
       // Store session_id in localStorage or cookies
@@ -152,12 +152,9 @@ export function sendActivity(activityType, additionalData = {}, typeId = null) {
 //}
 
 export async function getTenantId(retryCount = 10, delay = 1000) {
-  console.log(WIDGET_ID,"<<<<<<<<<<in getTenantId widget id>>>>>>>>>>")
-  console.log("<<<<<<<<<<in getTenantId>>>>>>>>>>")
 
   // Retry if WIDGET_ID is undefined
   while (typeof WIDGET_ID === "undefined" && retryCount > 0) {
-    console.warn(retryCount,"WIDGET_ID is undefined. Retrying...");
     await new Promise(resolve => setTimeout(resolve, delay));
     retryCount--;
   }
@@ -177,7 +174,6 @@ export async function getTenantId(retryCount = 10, delay = 1000) {
         },
       }
     );
-    console.log(response,"<<<<<<<<<<in getTenantId response>>>>>>>>>>")
     if (response.ok) {
       const data = await response.json();
       if (data.success) {
