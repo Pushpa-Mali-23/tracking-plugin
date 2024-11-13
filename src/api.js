@@ -152,6 +152,7 @@ export function sendActivity(activityType, additionalData = {}, typeId = null) {
 //}
 
 export async function getTenantId() {
+  console.log("<<<<<<<<<<in getTenantId>>>>>>>>>>")
   try {
     const response = await fetch(
       `${SERVER_DOMAIN}/tenant_utils/get_tenant_id`,
@@ -164,7 +165,7 @@ export async function getTenantId() {
         },
       }
     );
-
+    console.log(response,"<<<<<<<<<<in getTenantId response>>>>>>>>>>")
     if (response.ok) {
       const data = await response.json();
       if (data.success) {
