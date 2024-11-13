@@ -136,7 +136,7 @@ export function sendSocketActivity(activityType, additionalData = {}, typeId=nul
       const event_Triggers = eventTriggers; // Get event triggers
       //working // const matchingTrigger = eventTriggers.find(trigger => trigger.event === activityType);
       const matchingTrigger = event_Triggers.find(trigger => {
-        return (activityType === "page_view" && trigger.event === "page_view") ||
+        return (activityType === "page_view" && trigger.event === "page_view" || activityType === "page_view" && trigger.event == "product_view") ||
                (activityType === "click" && trigger.event === "clicks");
       });
 
