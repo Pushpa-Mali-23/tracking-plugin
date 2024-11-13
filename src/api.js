@@ -209,18 +209,18 @@ export async function fetchTriggers() {
       // Filter and store events with specific event_name and values data
       eventTriggers = data.data
       .filter(item => 
-        ['PAGE_VIEW', 'PRODUCT_VIEW', 'CLICKS'].includes(item.event_name) && 
-        item.meta_data && item.meta_data.event_values
+        ['PAGE_VIEW', 'PRODUCT_VIEW', 'CLICKS', 'JWERO_ABANDONED_CART'].includes(item.event_name) && 
+        item.meta_data && item.meta_data.event_value
       )
       .map(item => ({
         id: item?.id,
         event: item.event_name.toLowerCase(),
-        values: Array.isArray(item.meta_data.event_values)
-          ? item.meta_data.event_values.map(value => value.value) // Extract values from dropdown items
-          : [item.meta_data.event_values] // Handle single text value as an array
+        values: Array.isArray(item.meta_data.event_value)
+          ? item.meta_data.event_value.map(value => value.value) // Extract values from dropdown items
+          : [item.meta_data.event_value] // Handle single text value as an array
       }));
 
-      console.log(eventTriggers, "<<<<<<< filtered event triggers");
+      //console.log(eventTriggers, "<<<<<<< filtered event triggers");
       //console.log(eventTriggers[0].values.length, "<<<<<<< filtered event triggers");
       //return data;
     } catch (error) {
