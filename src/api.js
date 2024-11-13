@@ -151,7 +151,7 @@ export function sendActivity(activityType, additionalData = {}, typeId = null) {
 }
 //}
 
-export async function getTenantId(retryCount = 10, delay = 1000) {
+export async function getTenantId(retryCount = 50, delay = 1000) {
 
   // Retry if WIDGET_ID is undefined
   while (typeof WIDGET_ID === "undefined" && retryCount > 0) {
@@ -216,7 +216,7 @@ export async function fetchTriggers() {
         id: item?.id,
         event: item.event_name.toLowerCase(),
         values: Array.isArray(item.meta_data.event_value)
-          ? item.meta_data.event_value.map(value => value.value) // Extract values from dropdown items
+          ? item.meta_data.event_value.map(value => value.value || value.slug) // Extract values from dropdown items
           : [item.meta_data.event_value] // Handle single text value as an array
       }));
 
