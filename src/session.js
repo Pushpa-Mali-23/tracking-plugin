@@ -44,7 +44,6 @@ export function initializeSession() {
         //createNewSession();
         createNewSession().then(() => resolve());
       } else {
-        console.log("session id is present");
         resetSessionTimer();
         resetInactivityTimer();
         //initializeIntervalActivity();

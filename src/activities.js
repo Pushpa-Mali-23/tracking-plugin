@@ -8,6 +8,12 @@ import { parseUrl } from './utils';
 export function trackPageActivity() {
   const url = window.location.pathname; // e.g., /products/diamond-ring-100
   const { category, identifier } = parseUrl(url); // Custom parser
+  
+  let activity_type = "page_view";
+  
+  if(category.includes('product')){
+    activity_type = "product_view";
+  }
   // sendActivity('page_view', { 
   //   activity_data: { 
   //     category, 
@@ -24,7 +30,7 @@ export function trackPageActivity() {
     userIsLoggedIn = true
   }
 
-  sendSocketActivity('page_view', {
+  sendSocketActivity(activity_type, {
     activity_data: { 
       category, 
       identifier,
