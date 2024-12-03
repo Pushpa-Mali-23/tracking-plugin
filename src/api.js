@@ -298,10 +298,10 @@ export function getSocketId() {
 export async function updateSessionUserId(sessionId, userId) {
   //console.log("parseInt update");
   //const url = `${SERVER_DOMAIN}/api/session/${sessionId}`;
-
+  const tenantId = await getTenantId();
   const payload = {
     id: parseInt(sessionId),
-    tenant_id: tenant_id,
+    tenant_id: tenantId,
     contact_id: parseInt(userId),
     user_agent: navigator.userAgent,
   };
