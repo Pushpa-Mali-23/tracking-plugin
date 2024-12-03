@@ -5,8 +5,8 @@ import { getUserId } from "./user";
 import { initActivityTracking } from "./activities";
 
 // WebSocket URL
-//const SOCKET_URL = "wss://api.jwero.com";
-const SOCKET_URL = "https://5850-116-72-105-227.ngrok-free.app";
+const SOCKET_URL = "wss://api.jwero.com";
+//const SOCKET_URL = "https://5850-116-72-105-227.ngrok-free.app";
 //const SOCKET_URL = "https://api.jwero.com";
 //const SOCKET_URL = "wss://1804-2409-4080-3e82-d5f8-e9e0-de8d-f15b-f12e.ngrok-free.app";
 //const SOCKET_URL = "http://localhost:8080";

@@ -306,7 +306,7 @@ export async function updateSessionUserId(sessionId, userId) {
     user_agent: navigator.userAgent,
   };
 
-  console.log(payload,"<<<on update");
+  //console.log(payload,"<<<on update");
 
   try {
     // const response = await fetch(url, {
