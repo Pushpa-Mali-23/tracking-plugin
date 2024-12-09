@@ -98,7 +98,7 @@ window.addEventListener("beforeunload", (event) => {
 });
 
 export function sendSocketActivity(activityType, additionalData = {}, typeId=null){
-  //console.log(additionalData?.activity_data,"<<<<<Additional Data");
+  console.log(additionalData?.activity_data,"<<<<<Additional Data 1");
   const sendActivity = () => {
 
   const sessionId = getSessionId();
@@ -179,6 +179,7 @@ export function sendSocketActivity(activityType, additionalData = {}, typeId=nul
     // socket.emit("handleEventTrigger",triggerPayload);
     // delete paylaod?.activity_data.handleEventTrigger;
   }
+  console.log("calling userActivity event");
   socket.emit("userActivity", paylaod);
 };
 sendActivity();
