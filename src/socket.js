@@ -130,7 +130,7 @@ export function sendSocketActivity(activityType, additionalData = {}, typeId=nul
       ? { type_id: typeId || additionalData?.type_id }
       : {}),
   };
-
+  console.log(additionalData?.activity_data,"<<<<<Additional Data");
   if(additionalData?.activity_data?.userIsLoggedIn === true){
     // Check if the activityType is "page_view"
     if (activityType === "page_view" || activityType === "click") {
