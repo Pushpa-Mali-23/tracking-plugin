@@ -204,6 +204,7 @@ export async function fetchTriggers() {
       });
 
       const data = await response.json();
+      //console.log(data.data);
       //console.log(data.data[0].meta_data,"<<<<<<<triggers data1");
 
       // Filter and store events with specific event_name and values data
