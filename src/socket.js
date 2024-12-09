@@ -20,7 +20,7 @@ const socket = io(SOCKET_URL, {
 
 // Log socket connection
 socket.on("connect", async () => {
-  console.log("socket connectedd");
+  //console.log("socket connectedd");
   //console.log(SOCKET_URL);
  
   //   console.log(
@@ -130,28 +130,28 @@ export function sendSocketActivity(activityType, additionalData = {}, typeId=nul
       ? { type_id: typeId || additionalData?.type_id }
       : {}),
   };
-  console.log(additionalData?.activity_data,"<<<<<Additional Data");
+  //console.log(additionalData?.activity_data,"<<<<<Additional Data");
   if(additionalData?.activity_data?.userIsLoggedIn === true){
     // Check if the activityType is "page_view"
     if (activityType === "page_view" || activityType === "click" || activityType === "product_view") {
       const event_Triggers = eventTriggers; // Get event triggers
       //working // const matchingTrigger = eventTriggers.find(trigger => trigger.event === activityType);
-      console.log(event_Triggers,"<<<<<event_Triggers");
+      //console.log(event_Triggers,"<<<<<event_Triggers");
       const matchingTrigger = event_Triggers.find(trigger => {
         return (activityType === "page_view" && trigger.event === "page_view" || activityType === "product_view" && trigger.event == "product_view") ||
                (activityType === "click" && trigger.event === "clicks");
       });
-      console.log(matchingTrigger,"<<<<<matchingTrigger");
+      //console.log(matchingTrigger,"<<<<<matchingTrigger");
       if (matchingTrigger) {
         let pageIdentifier;
-        console.log(pageIdentifier,"<<<<<pageIdentifier");
-        console.log(activityType,"<<<<<activityType");
+        //console.log(pageIdentifier,"<<<<<pageIdentifier");
+        //console.log(activityType,"<<<<<activityType");
         if(activityType === "click"){
           pageIdentifier = additionalData?.activity_data?.text
         } else{
           pageIdentifier = paylaod.activity_data?.identifier;
         }
-        console.log(pageIdentifier,"<<<<<pageIdentifier");
+        //console.log(pageIdentifier,"<<<<<pageIdentifier");
 
         // Check if the identifier exists in the event values for the "page_view" trigger
         if (matchingTrigger.values.includes(pageIdentifier)) {
@@ -166,7 +166,7 @@ export function sendSocketActivity(activityType, additionalData = {}, typeId=nul
             }],
             trigger_id: matchingTrigger?.id
           }
-          console.log("<<<<<<<<<<<<<<<<<<<<<<<<sending trigger event>>>>>>>>>>>>>>>>>>>>>>>>")
+          //console.log("<<<<<<<<<<<<<<<<<<<<<<<<sending trigger event>>>>>>>>>>>>>>>>>>>>>>>>")
           socket.emit("handleEventTrigger", trigger_payload);
           delete paylaod?.activity_data?.userIsLoggedIn;
         }
@@ -180,7 +180,7 @@ export function sendSocketActivity(activityType, additionalData = {}, typeId=nul
     // socket.emit("handleEventTrigger",triggerPayload);
     // delete paylaod?.activity_data.handleEventTrigger;
   }
-  console.log("calling userActivity event");
+  //console.log("calling userActivity event");
   socket.emit("userActivity", paylaod);
 };
 sendActivity();
