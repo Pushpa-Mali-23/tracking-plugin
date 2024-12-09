@@ -136,14 +136,15 @@ export function sendSocketActivity(activityType, additionalData = {}, typeId=nul
     if (activityType === "page_view" || activityType === "click") {
       const event_Triggers = eventTriggers; // Get event triggers
       //working // const matchingTrigger = eventTriggers.find(trigger => trigger.event === activityType);
+      console.log(event_Triggers,"<<<<<event_Triggers");
       const matchingTrigger = event_Triggers.find(trigger => {
         return (activityType === "page_view" && trigger.event === "page_view" || activityType === "page_view" && trigger.event == "product_view") ||
                (activityType === "click" && trigger.event === "clicks");
       });
-
+      console.log(matchingTrigger,"<<<<<matchingTrigger");
       if (matchingTrigger) {
         let pageIdentifier;
-
+        console.log(pageIdentifier,"<<<<<pageIdentifier");
         if(activityType === "click"){
           pageIdentifier = additionalData?.activity_data?.text
         } else{
@@ -164,7 +165,7 @@ export function sendSocketActivity(activityType, additionalData = {}, typeId=nul
             }],
             trigger_id: matchingTrigger?.id
           }
-          //console.log("<<<<<<<<<<<<<<<<<<<<<<<<sending trigger event>>>>>>>>>>>>>>>>>>>>>>>>")
+          console.log("<<<<<<<<<<<<<<<<<<<<<<<<sending trigger event>>>>>>>>>>>>>>>>>>>>>>>>")
           socket.emit("handleEventTrigger", trigger_payload);
           delete paylaod?.activity_data?.userIsLoggedIn;
         }
