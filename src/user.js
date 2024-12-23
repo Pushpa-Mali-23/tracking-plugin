@@ -8,10 +8,22 @@ export function getUserId() {
   let tempUserId = null;
   if (!userId) {
     //console.log("setting temp user id")
-    tempUserId = generateUniqueId();
-    storageKey = "temp_contact_id";
-    setCookie(storageKey, tempUserId, 365); //expires in 1 year
-    localStorage.setItem(storageKey, tempUserId);
+    // Check if temp_contact_id exists in local storage
+    tempUserId = localStorage.getItem("temp_contact_id");
+    if (!tempUserId) {
+      tempUserId = generateUniqueId();
+      storageKey = "temp_contact_id";
+      setCookie(storageKey, tempUserId, 365); //expires in 1 year
+      localStorage.setItem(storageKey, tempUserId);
+    } else {
+      // Retrieve the temp_contact_id from cookie or local storage
+      tempUserId =
+        getCookie("temp_contact_id") || localStorage.getItem("temp_contact_id");
+    }
+    // tempUserId = generateUniqueId();
+    // storageKey = "temp_contact_id";
+    // setCookie(storageKey, tempUserId, 365); //expires in 1 year
+    // localStorage.setItem(storageKey, tempUserId);
   } else {
     tempUserId =
       getCookie("temp_contact_id") || localStorage.getItem("temp_contact_id");
@@ -25,7 +37,6 @@ export function getUserId() {
 }
 
 export async function setUserId(userId) {
-  
   const storageKey = "user_id";
   setCookie(storageKey, userId, 365);
   localStorage.setItem(storageKey, userId);
@@ -60,7 +71,7 @@ export async function setUserId(userId) {
     //   type: "user_login",
     //   type_id: null,
     // });
-    sendSocketActivity("user_login",{
+    sendSocketActivity("user_login", {
       activity_data: {
         user_id: userId,
       },
