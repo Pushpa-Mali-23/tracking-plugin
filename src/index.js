@@ -41,25 +41,26 @@ import { fetchGeolocation, setWidgetId as internalSetWidgetId } from "./utils";
     // });
     //working-end
 
-    socket.on("connect", async () => {
+    //uncomment
+    // socket.on("connect", async () => {
       
-      try {
-        // Initialize session with the socket ID
-        await initializeSession();
+    //   try {
+    //     // Initialize session with the socket ID
+    //     await initializeSession();
     
-        // Fetch triggers and wait for it to complete before moving to activity tracking
-        //console.log("<<<<<<fetch triggers>>>>>>")
-        await fetchTriggers();
+    //     // Fetch triggers and wait for it to complete before moving to activity tracking
+    //     //console.log("<<<<<<fetch triggers>>>>>>")
+    //     await fetchTriggers();
     
-        //console.log("<<<<<<actitvity started>>>>>>")
-        // Initialize activity tracking
-        initActivityTracking();
+    //     //console.log("<<<<<<actitvity started>>>>>>")
+    //     // Initialize activity tracking
+    //     initActivityTracking();
     
-      } catch (error) {
-        console.error("Error during initialization:", error);
-      }
-    });
-    
+    //   } catch (error) {
+    //     console.error("Error during initialization:", error);
+    //   }
+    // });
+    //uncomment
 
     // Expose global functions
     global.TrackingPlugin = {
@@ -70,16 +71,18 @@ import { fetchGeolocation, setWidgetId as internalSetWidgetId } from "./utils";
       setWidgetId: function (widgetId) {
         internalSetWidgetId(widgetId);
       },
-      trackCustomActivity: function (activityType, typeId, additionalData) {
-        if (activityType.trim() === "") {
-          console.error(
-            "Invalid activityType provided to trackCustomActivity."
-          );
-          return;
-        }
-        //sendActivity(activityType, additionalData, typeId);
-        sendSocketActivity(activityType, additionalData, typeId);
-      },
+      //uncomment
+      // trackCustomActivity: function (activityType, typeId, additionalData) {
+      //   if (activityType.trim() === "") {
+      //     console.error(
+      //       "Invalid activityType provided to trackCustomActivity."
+      //     );
+      //     return;
+      //   }
+      //   //sendActivity(activityType, additionalData, typeId);
+      //   sendSocketActivity(activityType, additionalData, typeId);
+      // },
+      //uncomment
       config: function (options) {
         if (options.apiUrl) {
           setApiUrls(options.apiUrl);
