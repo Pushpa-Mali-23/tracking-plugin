@@ -2,7 +2,7 @@
 import { sendActivity } from "./api";
 import { sendSocketActivity } from "./socket";
 import { getUserId } from "./user";
-import { getCssSelector } from "./utils";
+import { getCssSelector, parseUrl } from "./utils";
 
 export function initEventListeners() {
   // Clicks
@@ -56,7 +56,7 @@ export function initEventListeners() {
       if(userData?.userId){
         userIsLoggedIn = true
       }
-
+      //console.log("hereee");
       sendSocketActivity("click", {
         activity_data: {
           tag: target.tagName.toLowerCase(),
@@ -68,6 +68,8 @@ export function initEventListeners() {
           selector: getCssSelector(target),
           redirect_url: redirectUrl,
           userIsLoggedIn,
+          //category: parseUrl(window.location.href).category,
+          //identifier: parseUrl(window.location.href).identifier,
         },
         page_url: window.location.href,
         type: "click",

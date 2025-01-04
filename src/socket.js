@@ -97,6 +97,7 @@ window.addEventListener("beforeunload", (event) => {
   }
 });
 
+const userLoginSessions = new Set();
 export function sendSocketActivity(activityType, additionalData = {}, typeId=null){
   //console.log(additionalData?.activity_data,"<<<<<Additional Data 1");
   const sendActivity = () => {
@@ -111,6 +112,16 @@ export function sendSocketActivity(activityType, additionalData = {}, typeId=nul
     return;
   }
 
+  // If the activityType is "user_login", check if we’ve already logged in for this session
+  if (activityType === "user_login") {
+    // If this sessionId is already in userLoginSessions, skip sending again
+    if (userLoginSessions.has(sessionId)) {
+      return;
+    } else {
+      // Otherwise, mark this sessionId as having a user_login
+      userLoginSessions.add(sessionId);
+    }
+  }
 
   const paylaod = {
     session_id : parseInt(sessionId),
