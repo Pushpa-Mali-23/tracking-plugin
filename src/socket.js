@@ -97,7 +97,9 @@ window.addEventListener("beforeunload", (event) => {
   }
 });
 
-const userLoginSessions = new Set();
+// Load existing session IDs from localStorage (or use an empty array if none found)
+let userLoginSessions = JSON.parse(localStorage.getItem("userLoginSessions")) || [];
+
 export function sendSocketActivity(activityType, additionalData = {}, typeId=null){
   //console.log(additionalData?.activity_data,"<<<<<Additional Data 1");
   const sendActivity = () => {
@@ -114,12 +116,13 @@ export function sendSocketActivity(activityType, additionalData = {}, typeId=nul
 
   // If the activityType is "user_login", check if we’ve already logged in for this session
   if (activityType === "user_login") {
-    // If this sessionId is already in userLoginSessions, skip sending again
-    if (userLoginSessions.has(sessionId)) {
+    // If we already have this session ID in localStorage, skip
+    if (userLoginSessions.includes(sessionId)) {
       return;
     } else {
-      // Otherwise, mark this sessionId as having a user_login
-      userLoginSessions.add(sessionId);
+      // Otherwise, store it
+      userLoginSessions.push(sessionId);
+      localStorage.setItem("userLoginSessions", JSON.stringify(userLoginSessions));
     }
   }
 
