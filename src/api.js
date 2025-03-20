@@ -238,7 +238,7 @@ export async function getEventTriggers() {
 export function setSessionId(id) {
   //console.log("settting session id in storage");
   const storageKey = "session_id";
-  setCookie(storageKey, id, 30); // Expires in 30 minutes
+  setCookie(storageKey, id, 30); // Expires in 30 days
   localStorage.setItem(storageKey, id);
 }
 

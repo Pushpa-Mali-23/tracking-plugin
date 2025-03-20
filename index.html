@@ -12,15 +12,7 @@
       max-width: 600px;
       margin: auto;
     }
-    .log {
-      background-color: #f9f9f9;
-      border: 1px solid #ddd;
-      padding: 10px;
-      height: 200px;
-      overflow-y: scroll;
-      margin-top: 20px;
-    }
-    button, input[type="submit"] {
+    button {
       padding: 10px 20px;
       margin: 5px 0;
     }
@@ -30,152 +22,60 @@
   <div class="container">
     <h1>Tracking Plugin Test Page</h1>
     
-    <!-- Configuration for Tracking Plugin -->
-    <!-- <script>
-      window.TrackingPluginConfig = {
-        config: {
-          apiUrl: {
-            sessionUrl: 'https://run.mocky.io/v3/<your-mock-id-session>', // Replace with your Mocky session URL
-            activityUrl: 'https://run.mocky.io/v3/<your-mock-id-activity>', // Replace with your Mocky activity URL
-            endSessionUrl: 'https://run.mocky.io/v3/<your-mock-id-end-session>' // Replace with your Mocky end session URL
-          }
-        }
-      };
-    </script> -->
-
-    <!-- Load the Tracking Plugin -->
-    <!-- <script src="https://pushpa-mali-23.github.io/tracking-plugin/tracking-plugin.min.js"></script> -->
-    <script src="tracking-plugin.min.js"></script>
-    <script>
-      window.addEventListener('load', () => {
-        if (window.TrackingPlugin) {
-          //console.log('TrackingPlugin loaded successfully', window.TrackingPlugin, window.TrackingPlugin.setUserId);
-          
-          // Immediately set the widgetId after the plugin loads
-          window.TrackingPlugin.setWidgetId('hfSNfcb4BKvebGMTeK2p/A=='); //local k
-          //window.TrackingPlugin.setWidgetId('NRGovRsL7oD3y/aW7VF5pQ=='); //local p
-          //window.TrackingPlugin.setWidgetId('HUiAXvW5MKT9VWd1eaMIPA=='); // tiara
-          //console.log('Widget ID set to: N2cH/ZGTyBWNhUWfcWq7+g==');
-        } else {
-          console.error('TrackingPlugin is not available');
-        }
-      });
-      // window.addEventListener('DOMContentLoaded', () => {
-      //   const widgetId='N2cH/ZGTyBWNhUWfcWq7+g==';
-      //   if(widgetId && window.TrackingPlugin){
-      //     window.TrackingPlugin.setWidgetId('N2cH/ZGTyBWNhUWfcWq7+g==');
-      //   }
-       
-      //});
-    </script>
-
-    <!-- User Login Simulation -->
+    <!-- Buttons for testing -->
     <button id="loginBtn">Simulate User Login</button>
-
-    <!-- Click Tracking -->
-    <button id="clickBtn">Click Me!</button>
-    <button onclick="window.location.href='https://www.example.com'">Redirect to Example</button>
-    <!-- <button id="redirectBtn">Redirect to Example 2</button> -->
-    <a href="https://www.example.com">Go to Example</a>
-    <a href="#">Go to Example 2</a>
-
-    <!-- Custom Activity Tracking -->
     <button id="customActivityBtn">Track Custom Activity</button>
-
-    <!-- Log Section -->
-    <!-- <h2>Plugin Logs:</h2>
-    <div class="log" id="pluginLog"></div> -->
   </div>
 
-  <!-- Testing Scripts -->
+  <!-- Load the Tracking Plugin Asynchronously -->
   <script>
-    // Function to log messages to the log div
-    // function logMessage(message) {
-    //   const logDiv = document.getElementById('pluginLog');
-    //   const timestamp = new Date().toLocaleTimeString();
-    //   logDiv.innerHTML += `<p>[${timestamp}] ${message}</p>`;
-    //   logDiv.scrollTop = logDiv.scrollHeight;
-    // }
-
-    // // Override fetch to log API calls
-    // const originalFetch = window.fetch;
-    // window.fetch = function(url, options) {
-    //   logMessage(`Fetch called with URL: ${url} | Method: ${options.method}`);
-    //   return originalFetch(url, options)
-    //     .then(response => {
-    //       logMessage(`Fetch response from ${url}: ${response.status} ${response.statusText}`);
-    //       return response;
-    //     })
-    //     .catch(error => {
-    //       logMessage(`Fetch error from ${url}: ${error}`);
-    //       throw error;
-    //     });
-    // };
-
-    // Handle user login
-    document.getElementById('loginBtn').addEventListener('click', () => {
-      const userId = 5009;
-     // const userId = 849317;
-      //const userId = 234567890; //random
-      //const userId = 2000;
-      if (window.TrackingPlugin && typeof window.TrackingPlugin.setUserId === 'function') {
-        window.TrackingPlugin.setUserId(userId);
-        logMessage(`User ID set to ${userId}`);
-      } else {
-        logMessage('TrackingPlugin.setUserId is not available.');
-      }
-    });
-
-    // Handle custom activity tracking
-    document.getElementById('customActivityBtn').addEventListener('click', () => {
-      const activityType = 'product_id';
-      const typeId = 10; // Example product ID
-      const additionalData = {
-        activity_data : {
-        product_name: 'Diamond Ring',
-        price: 299.99
-      }
+    (function() {
+      var script = document.createElement("script");
+      //script.src = "https://pushpa-mali-23.github.io/tracking-plugin/tracking-plugin.min.js";
+      script.src = "tracking-plugin.min.js";
+      script.async = true;
+      script.onload = function() {
+        console.log("Tracking Plugin Loaded");
+        window.TrackingPlugin?.setWidgetId('hfSNfcb4BKvebGMTeK2p/A=='); // Replace with actual widget ID
       };
-      if (window.TrackingPlugin && typeof window.TrackingPlugin.trackCustomActivity === 'function') {
-        window.TrackingPlugin.trackCustomActivity(activityType, typeId, additionalData);
-        logMessage(`Custom activity tracked: ${activityType}, Type ID: ${typeId}`);
-      } else {
-        logMessage('TrackingPlugin.trackCustomActivity is not available.');
-      }
+      document.head.appendChild(script);
+
+      // Function to set user ID dynamically after login
+      window.setTrackingUserId = function(userId) {
+        if (window.TrackingPlugin && typeof window.TrackingPlugin.setUserId === 'function') {
+          window.TrackingPlugin.setUserId(userId);
+          console.log(`User ID set: ${userId}`);
+        } else {
+          console.error("TrackingPlugin.setUserId is not available yet.");
+        }
+      };
+    })();
+  </script>
+
+  <!-- Test Scripts -->
+  <script>
+    // Simulate user login
+    document.getElementById('loginBtn').addEventListener('click', () => {
+      const userId = 5009; // Replace with actual user ID after authentication
+      setTrackingUserId(userId); // Call the function to set the user ID
     });
 
-    // // Handle form submission
-    // document.getElementById('testForm').addEventListener('submit', (e) => {
-    //   e.preventDefault();
-    //   const inputValue = document.getElementById('inputField').value;
-    //   logMessage(`Form submitted with input: ${inputValue}`);
-    // });
-
-    // Initialize the Tracking Plugin after the script loads
-    // window.addEventListener('load', () => {
-    //   if (window.TrackingPluginConfig && window.TrackingPluginConfig.config) {
-    //     window.TrackingPlugin.config(window.TrackingPluginConfig.config);
-    //     logMessage('Tracking Plugin configured.');
-    //   } else {
-    //     logMessage('No TrackingPluginConfig found.');
-    //   }
-    // });
-
-    document.getElementById('redirectBtn').addEventListener('click', (e) => {
-      e.preventDefault(); // Prevent immediate redirection
-
-      const redirectUrl = 'https://www.example.com';
-    
-      // Log the redirect URL or track the event
+    // Simulate custom activity tracking
+    document.getElementById('customActivityBtn').addEventListener('click', () => {
       if (window.TrackingPlugin && typeof window.TrackingPlugin.trackCustomActivity === 'function') {
-        window.TrackingPlugin.trackCustomActivity('redirect', 1, { url: redirectUrl });
-        logMessage(`Redirect to URL: ${redirectUrl} is being tracked`);
+        const activityType = 'product_id';
+        const typeId = 10; // Example product ID
+        const additionalData = {
+          activity_data: {
+            product_name: 'Diamond Ring',
+            price: 299.99
+          }
+        };
+        window.TrackingPlugin.trackCustomActivity(activityType, typeId, additionalData);
+        console.log(`Custom activity tracked: ${activityType}, Type ID: ${typeId}`);
+      } else {
+        console.error("TrackingPlugin.trackCustomActivity is not available yet.");
       }
-
-      // Delay the actual redirection to allow the tracking to happen first
-      // setTimeout(() => {
-      //   window.location.href = redirectUrl;
-      // }, 500); // 500ms delay (adjust as needed)
     });
   </script>
 </body>
