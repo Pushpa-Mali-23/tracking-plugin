@@ -24,7 +24,9 @@
     
     <!-- Buttons for testing -->
     <button id="loginBtn">Simulate User Login</button>
-    <button id="customActivityBtn">Track Custom Activity</button>
+    <button id="customActivityBtn">Track Custom Activity</button>    
+    <button class="add_to_cart">Add to cart</button>
+    <button class="wishlist">Wishlist</button>
   </div>
 
   <!-- Load the Tracking Plugin Asynchronously -->
@@ -58,6 +60,25 @@
     document.getElementById('loginBtn').addEventListener('click', () => {
       const userId = 5009; // Replace with actual user ID after authentication
       setTrackingUserId(userId); // Call the function to set the user ID
+    });
+
+    // Simulate product event tracking
+    document.querySelector('.add_to_cart').addEventListener('click', () => {
+      if (window.TrackingPlugin && typeof window.TrackingPlugin.trackProductEvent === 'function') {
+        const eventName = 'add_to_cart';
+        const productInfo = {
+          id: 'dr-5979',
+          name: 'Diamond Jewellery - 18 KT Gold',
+          slug: 'dr-5979',
+          sku: 'dr-5979'
+        };
+        
+        window.TrackingPlugin.trackProductEvent(eventName, productInfo);
+        console.log(`Product event tracked: ${eventName}`, productInfo);
+        
+      } else {
+        console.error("TrackingPlugin.trackProductEvent is not available yet.");
+      }
     });
 
     // Simulate custom activity tracking

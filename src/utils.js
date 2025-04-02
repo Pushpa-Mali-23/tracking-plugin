@@ -1,5 +1,5 @@
 export let WIDGET_ID;
-
+export let connect = true;
 export function setWidgetId(widgetId) {
   WIDGET_ID = widgetId;
 }
