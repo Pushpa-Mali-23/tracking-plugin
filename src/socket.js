@@ -28,6 +28,9 @@ if (connect) {
     transports: ["websocket"], // WebSocket transport
     reconnection: true, // Enable reconnection
     //secure: true, // Secure connection
+    // pingTimeout: 45000,  // Wait 45s for pong (mobile-friendly)
+    // pingInterval: 30000, // Ping every 30s (balance between battery and detection)
+    // timeout: 5000,       // Fail fast on initial connection
   });
 
   // Log socket connection
@@ -145,7 +148,7 @@ export function sendSocketActivity(
       }
     }
 
-    const additionalActivities = ["add_to_cart", "wishlist"];
+    const additionalActivities = ["add_to_cart", "wishlist", "product_view"];
     let payload = {};
     if (additionalActivities.includes(activityType)) {
       payload = {
