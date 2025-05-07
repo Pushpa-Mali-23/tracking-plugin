@@ -65,6 +65,7 @@ if (connect) {
 
             // Emit socket event to update session with payload
             socket.emit("updateSessionUserId", payload);
+            //socket.emit("visitor_integration",tenantId);
           })
           .catch((error) => {
             console.error("Error retrieving tenant ID:", error);
@@ -160,8 +161,8 @@ export function sendSocketActivity(
         type_id: additionalData?.slug || additionalData?.sku,
         activity_data: {
           category: "product",
-          identifier: additionalData?.slug || additionalData?.sku,
-          ...additionalData,
+          identifier: additionalData?.slug || additionalData?.sku
+          //...additionalData,
         },
       };
     } else {
@@ -173,7 +174,7 @@ export function sendSocketActivity(
           ...additionalData?.activity_data,
         },
         page_url: additionalData?.page_url || window.location.href,
-        type: activityType,
+        type: activityType === 'product_view_plugin' ? 'product_view' : activityType,
         ...(typeId || additionalData?.type_id
           ? { type_id: typeId || additionalData?.type_id }
           : {}),

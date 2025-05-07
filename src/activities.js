@@ -12,7 +12,7 @@ export function trackPageActivity() {
   let activity_type = "page_view";
   
   if(category.includes('product')){
-    activity_type = "product_view";
+    activity_type = "product_view_plugin";
   }
   // sendActivity('page_view', { 
   //   activity_data: { 
