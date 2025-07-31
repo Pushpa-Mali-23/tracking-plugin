@@ -26,7 +26,9 @@
     <button id="loginBtn">Simulate User Login</button>
     <button id="customActivityBtn">Track Custom Activity</button>    
     <button class="add_to_cart">Add to cart</button>
+    <button class="remove_from_cart">Remove from cart</button>
     <button class="wishlist">Wishlist</button>
+    <button class="remove_from_wishlist">Remove from Wishlist</button>
     <button class="product_view">Product View</button> 
   </div>
 
@@ -86,10 +88,10 @@
       if (window.TrackingPlugin && typeof window.TrackingPlugin.trackProductEvent === 'function') {
         const eventName = 'add_to_cart';
         const productInfo = {
-          id: 'dr-5979',
-          name: 'Diamond Jewellery - 18 KT Gold',
-          slug: 'dr-5979',
-          sku: 'dr-5979'
+          id: 83858,
+          name: 'Golden Glow Pendant Chain',
+          slug: 'golden-glow-pendant-chain',
+          sku: 'TEST5'
         };
         
         window.TrackingPlugin.trackProductEvent(eventName, productInfo);
@@ -100,6 +102,59 @@
       }
     });
 
+    document.querySelector('.remove_from_cart').addEventListener('click', () => {
+      if (window.TrackingPlugin && typeof window.TrackingPlugin.trackProductEvent === 'function') {
+        const eventName = 'remove_from_cart';
+        const productInfo = {
+          id: 83858,
+          name: 'Golden Glow Pendant Chain',
+          slug: 'golden-glow-pendant-chainnnnnn',
+          sku: 'TEST5'
+        };
+        
+        window.TrackingPlugin.trackProductEvent(eventName, productInfo);
+        console.log(`Product event tracked: ${eventName}`, productInfo);
+        
+      } else {
+        console.error("TrackingPlugin.trackProductEvent is not available yet.");
+      }
+    });
+
+     document.querySelector('.remove_from_wishlist').addEventListener('click', () => {
+      if (window.TrackingPlugin && typeof window.TrackingPlugin.trackProductEvent === 'function') {
+        const eventName = 'remove_from_wishlist';
+        const productInfo = {
+          id: 83858,
+          name: 'Golden Glow Pendant Chain',
+          slug: 'golden-glow-pendant-chainnnnnn',
+          sku: 'TEST5'
+        };
+        
+        window.TrackingPlugin.trackProductEvent(eventName, productInfo);
+        console.log(`Product event tracked: ${eventName}`, productInfo);
+        
+      } else {
+        console.error("TrackingPlugin.trackProductEvent is not available yet.");
+      }
+    });
+
+     document.querySelector('.wishlist').addEventListener('click', () => {
+      if (window.TrackingPlugin && typeof window.TrackingPlugin.trackProductEvent === 'function') {
+        const eventName = 'wishlist';
+        const productInfo = {
+          id: 83858,
+          name: 'Golden Glow Pendant Chain',
+          slug: 'golden-glow-pendant-chain-12',
+          sku: 'TEST5'
+        };
+        
+        window.TrackingPlugin.trackProductEvent(eventName, productInfo);
+        console.log(`Product event tracked: ${eventName}`, productInfo);
+        
+      } else {
+        console.error("TrackingPlugin.trackProductEvent is not available yet.");
+      }
+    });
     // Simulate custom activity tracking
     document.getElementById('customActivityBtn').addEventListener('click', () => {
       if (window.TrackingPlugin && typeof window.TrackingPlugin.trackCustomActivity === 'function') {

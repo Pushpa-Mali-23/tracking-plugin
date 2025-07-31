@@ -149,7 +149,7 @@ export function sendSocketActivity(
       }
     }
 
-    const additionalActivities = ["add_to_cart", "wishlist", "product_view"];
+    const additionalActivities = ["add_to_cart", "wishlist", "product_view", "remove_from_cart", "remove_from_wishlist"];
     let payload = {};
     if (additionalActivities.includes(activityType)) {
       payload = {

@@ -194,7 +194,7 @@ export async function fetchTriggers() {
   const {userId} = getUserId();
 
     try {
-      const response = await fetch(`${SERVER_DOMAIN}/flow?type=trigger&page=1&per_page=100`, {
+      const response = await fetch(`${SERVER_DOMAIN}/flow/summary?type=trigger`, {
         method: 'GET',
         headers: {
           Connection: "keep-alive",
@@ -221,7 +221,7 @@ export async function fetchTriggers() {
           : [item.meta_data.event_value] // Handle single text value as an array
       }));
 
-      //console.log(eventTriggers, "<<<<<<< filtered event triggers");
+      // console.log(eventTriggers, "<<<<<<< filtered event triggers");
       //console.log(eventTriggers[0].values.length, "<<<<<<< filtered event triggers");
       //return data;
     } catch (error) {
