@@ -79,7 +79,7 @@ function createNewSession() {
   //console.log(socketId);
   // Retrieve geolocation data from storage
   const storedGeolocationData = JSON.parse(
-    localStorage.getItem("geolocationData")
+    localStorage.getItem("locationData")
   );
 
   // Extract individual geolocation values from storage, provide default values if not found

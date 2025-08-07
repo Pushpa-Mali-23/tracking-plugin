@@ -47,7 +47,7 @@ export function getCssSelector(element) {
 
  // Function to fetch and store geolocation data
  export async function fetchGeolocation() {
-  const geolocationData = localStorage.getItem("geolocationData");
+  const geolocationData = localStorage.getItem("locationData");
   if (geolocationData) {
 
     return JSON.parse(geolocationData);
@@ -84,7 +84,7 @@ export function getCssSelector(element) {
           data[key] = null;
         }
       }
-      localStorage.setItem("geolocationData", JSON.stringify(data));
+      localStorage.setItem("locationData", JSON.stringify(data));
     
       return data;
     } else {
