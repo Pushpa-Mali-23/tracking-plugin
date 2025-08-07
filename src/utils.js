@@ -54,24 +54,31 @@ export function getCssSelector(element) {
   }
 
   try {
-    const response = await fetch('https://geolocation-db.com/json/', {
+    // const response = await fetch('https://geolocation-db.com/json/', {
+    //   headers: {
+    //     'accept': 'application/json, text/plain, */*',
+    //     'accept-language': 'en-GB,en-US;q=0.9,en;q=0.8'//,
+    //     // 'origin': 'https://app.jwero.ai',
+    //     // 'referer': 'https://app.jwero.ai/',
+    //     // 'sec-ch-ua': '"Google Chrome";v="129", "Not=A?Brand";v="8", "Chromium";v="129"',
+    //     // 'sec-ch-ua-mobile': '?0',
+    //     // 'sec-ch-ua-platform': '"macOS"',
+    //     // 'sec-fetch-dest': 'empty',
+    //     // 'sec-fetch-mode': 'cors',
+    //     // 'sec-fetch-site': 'cross-site',
+    //     // 'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36'
+    //   }
+    // });
+    const response = await fetch('https://get.geojs.io/v1/ip/geo.json', {
       headers: {
         'accept': 'application/json, text/plain, */*',
-        'accept-language': 'en-GB,en-US;q=0.9,en;q=0.8'//,
-        // 'origin': 'https://app.jwero.ai',
-        // 'referer': 'https://app.jwero.ai/',
-        // 'sec-ch-ua': '"Google Chrome";v="129", "Not=A?Brand";v="8", "Chromium";v="129"',
-        // 'sec-ch-ua-mobile': '?0',
-        // 'sec-ch-ua-platform': '"macOS"',
-        // 'sec-fetch-dest': 'empty',
-        // 'sec-fetch-mode': 'cors',
-        // 'sec-fetch-site': 'cross-site',
-        // 'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36'
+        'accept-language': 'en-GB,en-US;q=0.9,en;q=0.8',
       }
     });
-
+    //console.log(response,"<<<<<response");
     if (response.ok) {
       const data = await response.json();
+      //console.log(data,"<<<<<data");
       for(let key in data){
         if(data[key] === "Not found"){
           data[key] = null;

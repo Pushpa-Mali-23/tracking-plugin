@@ -83,7 +83,7 @@ function createNewSession() {
   );
 
   // Extract individual geolocation values from storage, provide default values if not found
-  const { country_name, state, city, latitude, longitude, IPv4 } = storedGeolocationData || {};
+  const { country_name, state, city, latitude, longitude, IPv4, ip, region, country } = storedGeolocationData || {};
 
   const { userId, tempUserId } = getUserId();
   const contactId = userId ? parseInt(userId) : null;
@@ -92,11 +92,11 @@ function createNewSession() {
     //contact_id: parseInt(user_id),
     contact_id: contactId,
     temp_contact_id: tempId,
-    ip_address: IPv4, // Implement getUserIP if needed
+    ip_address: ip || IPv4, // Implement getUserIP if needed
     coordinates:  {latitude: latitude || 0, longitude: longitude || 0 }, // Implement geolocation if needed
     city: city, // Implement geolocation or use a service
-    state: state,
-    country: country_name,
+    state: region || state,
+    country: country || country_name,
     channel: getChannel(), // Define how to determine the channel
     referrer: document.referrer,
     session_start: new Date().toISOString(),

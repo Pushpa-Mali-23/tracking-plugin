@@ -13,10 +13,11 @@ import {
 (function (global) {
   try {
     if (connect) {
-      fetchGeolocation();
+      // fetchGeolocation();
 
       socket?.on("connect", async () => {
         try {
+          await  fetchGeolocation();
           // Initialize session with the socket ID
           await initializeSession();
 
