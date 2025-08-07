@@ -15,14 +15,12 @@ export function initEventListeners() {
   //     const isButtonRedirect = target.tagName.toLowerCase() === "button";
   //     let redirectUrl = null;
   //     //const originalLocation = window.location.href;
-
   //     if (isLink) {
   //       // Capture the href value for anchors
   //       redirectUrl = target.href;
   //     } else if (isButtonRedirect) {
   //       // If it's a button, check if its click event triggers a navigation
   //       const originalLocation = window.location.href;
-
   //       // Add a temporary click event listener to detect the redirection
   //       const checkRedirect = function () {
   //         const newLocation = window.location.href;
@@ -31,7 +29,6 @@ export function initEventListeners() {
   //         }
   //         window.removeEventListener("click", checkRedirect);
   //       };
-
   //       window.addEventListener("click", checkRedirect);
   //     }
   //     //console.log(redirectUrl,"<<<<<<<<<<<<<<<<<<<<<<<<<<redirectUrl10");
@@ -50,7 +47,6 @@ export function initEventListeners() {
   //     //   type: "click",
   //     //   type_id: null, // Define if applicable
   //     // });
-
   //     let userIsLoggedIn=false;
   //     const userData = getUserId();
   //     if(userData?.userId){
@@ -75,11 +71,9 @@ export function initEventListeners() {
   //       type: "click",
   //       type_id: target.innerText, // Define if applicable
   //     });
-
   //     //return; // Exit early as the sendActivity will be called in the timeout
   //   }
   //});
-
   // export function initEventListeners() {
   //   document.addEventListener('click', function(event) {
   //     const target = event.target.closest('a, button, input, select, textarea');
@@ -87,10 +81,8 @@ export function initEventListeners() {
   //       console.log("Event Listener Triggered");
   //       const isLink = target.tagName.toLowerCase() === 'a' && target.href;
   //       const isButtonRedirect = target.tagName.toLowerCase() === 'button';
-
   //       let redirectUrl = null;
   //       const originalLocation = window.location.href;
-
   //       if (isLink) {
   //         // Capture the href value for anchors
   //         redirectUrl = target.href;
@@ -120,7 +112,6 @@ export function initEventListeners() {
   //         }, 100);
   //         return; // Exit early as the sendActivity will be called in the timeout
   //       }
-
   //       console.log(redirectUrl, "<<<<<<<<<<<<<<<< redirectUrl for link");
   //       sendActivity('click', {
   //         activity_data: {
@@ -139,7 +130,6 @@ export function initEventListeners() {
   //       });
   //     }
   //   });
-
   // // Form Submissions
   // document.addEventListener('submit', function(event) {
   //   const form = event.target;
@@ -156,7 +146,6 @@ export function initEventListeners() {
   //     type_id: null // Define if applicable
   //   });
   // });
-
   // // Scroll Depth
   // let lastScroll = 0;
   // window.addEventListener('scroll', function() {
@@ -174,7 +163,6 @@ export function initEventListeners() {
   //     });
   //   }
   // });
-
   // // Page Visibility
   // document.addEventListener('visibilitychange', function() {
   //   if (document.visibilityState === 'hidden') {
@@ -193,6 +181,5 @@ export function initEventListeners() {
   //     });
   //   }
   // });
-
   // Add more event listeners as needed
 }

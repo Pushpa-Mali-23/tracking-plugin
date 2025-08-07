@@ -24,7 +24,7 @@ const SOCKET_URL = "wss://api.jwero.com";
 let socket = null;
 if (connect) {
   // Initialize socket connection
-   socket = io(SOCKET_URL, {
+  socket = io(SOCKET_URL, {
     transports: ["websocket"], // WebSocket transport
     reconnection: true, // Enable reconnection
     //secure: true, // Secure connection
@@ -149,7 +149,13 @@ export function sendSocketActivity(
       }
     }
 
-    const additionalActivities = ["add_to_cart", "wishlist", "product_view", "remove_from_cart", "remove_from_wishlist"];
+    const additionalActivities = [
+      "add_to_cart",
+      "wishlist",
+      "product_view",
+      "remove_from_cart",
+      "remove_from_wishlist",
+    ];
     let payload = {};
     if (additionalActivities.includes(activityType)) {
       payload = {
@@ -161,7 +167,7 @@ export function sendSocketActivity(
         type_id: additionalData?.slug || additionalData?.sku,
         activity_data: {
           category: "product",
-          identifier: additionalData?.slug || additionalData?.sku
+          identifier: additionalData?.slug || additionalData?.sku,
           //...additionalData,
         },
       };
@@ -174,7 +180,10 @@ export function sendSocketActivity(
           ...additionalData?.activity_data,
         },
         page_url: additionalData?.page_url || window.location.href,
-        type: activityType === 'product_view_plugin' ? 'product_view' : activityType,
+        type:
+          activityType === "product_view_plugin"
+            ? "product_view"
+            : activityType,
         ...(typeId || additionalData?.type_id
           ? { type_id: typeId || additionalData?.type_id }
           : {}),

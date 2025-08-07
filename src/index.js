@@ -17,7 +17,7 @@ import {
 
       socket?.on("connect", async () => {
         try {
-          await  fetchGeolocation();
+          await fetchGeolocation();
           // Initialize session with the socket ID
           await initializeSession();
 

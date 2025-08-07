@@ -45,11 +45,10 @@ export function getCssSelector(element) {
   return path.join(" > ");
 }
 
- // Function to fetch and store geolocation data
- export async function fetchGeolocation() {
+// Function to fetch and store geolocation data
+export async function fetchGeolocation() {
   const geolocationData = localStorage.getItem("locationData");
   if (geolocationData) {
-
     return JSON.parse(geolocationData);
   }
 
@@ -69,23 +68,23 @@ export function getCssSelector(element) {
     //     // 'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36'
     //   }
     // });
-    const response = await fetch('https://get.geojs.io/v1/ip/geo.json', {
+    const response = await fetch("https://get.geojs.io/v1/ip/geo.json", {
       headers: {
-        'accept': 'application/json, text/plain, */*',
-        'accept-language': 'en-GB,en-US;q=0.9,en;q=0.8',
-      }
+        accept: "application/json, text/plain, */*",
+        "accept-language": "en-GB,en-US;q=0.9,en;q=0.8",
+      },
     });
     //console.log(response,"<<<<<response");
     if (response.ok) {
       const data = await response.json();
       //console.log(data,"<<<<<data");
-      for(let key in data){
-        if(data[key] === "Not found"){
+      for (let key in data) {
+        if (data[key] === "Not found") {
           data[key] = null;
         }
       }
       localStorage.setItem("locationData", JSON.stringify(data));
-    
+
       return data;
     } else {
       console.error("Failed to fetch geolocation data:", response.statusText);

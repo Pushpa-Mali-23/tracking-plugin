@@ -28,64 +28,65 @@ export function setApiUrls(urls) {
 
 export function sendSession(data) {
   return new Promise((resolve, reject) => {
-  const payload = {
-    //contact_id: getUserId(), // Assuming user_id corresponds to contact_id
-    tenant_id: tenant_id,
-    ip_address: data.ip_address || null,
-    coordinates: data.coordinates || null,
-    city: data.city || null,
-    state: data.state || null,
-    country: data.country || null,
-    user_agent: navigator.userAgent,
-    session_start: data.session_start || new Date().toISOString(),
-    //session_end: data.session_end || null,
-    //time_spent: data.time_spent || null,
-    channel: data.channel || null,
-    referrer: data.referrer || document.referrer,
-    //...data.contact_id && { contact_id: parseInt(getUserId()) }, // Include contact_id if it has a value
-    ...(data.contact_id && { contact_id: parseInt(data.contact_id) }), // Include contact_id if it has a value
-    ...(data.temp_contact_id && {
-      temp_contact_id: parseInt(data.temp_contact_id),
-    }),
-    ...(data.session_end && { session_end: data.session_end }), // Include if it has a value
-    ...(data.time_spent && { time_spent: data.time_spent }), // Include if it has a value
-    ...(data.socket_id && { socket_id: data.socket_id }), // Include if it has a value
-  };
+    const payload = {
+      //contact_id: getUserId(), // Assuming user_id corresponds to contact_id
+      tenant_id: tenant_id,
+      ip_address: data.ip_address || null,
+      coordinates: data.coordinates || null,
+      city: data.city || null,
+      state: data.state || null,
+      country: data.country || null,
+      user_agent: navigator.userAgent,
+      session_start: data.session_start || new Date().toISOString(),
+      //session_end: data.session_end || null,
+      //time_spent: data.time_spent || null,
+      channel: data.channel || null,
+      referrer: data.referrer || document.referrer,
+      //...data.contact_id && { contact_id: parseInt(getUserId()) }, // Include contact_id if it has a value
+      ...(data.contact_id && { contact_id: parseInt(data.contact_id) }), // Include contact_id if it has a value
+      ...(data.temp_contact_id && {
+        temp_contact_id: parseInt(data.temp_contact_id),
+      }),
+      ...(data.session_end && { session_end: data.session_end }), // Include if it has a value
+      ...(data.time_spent && { time_spent: data.time_spent }), // Include if it has a value
+      ...(data.socket_id && { socket_id: data.socket_id }), // Include if it has a value
+    };
 
-  // fetch(SESSION_API_URL, {
-  //   method: "POST",
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //     "User-Agent": navigator.userAgent,
-  //     apikey: WIDGET_ID,
-  //     //"Authorization": `Bearer ${TOKEN}`
-  //   },
-  //   body: JSON.stringify(payload),
-  //   // credentials: 'include',
-  // })
-  //   .then((response) => response.json())
-  //   .then((data) => {
-  //     // Optionally handle response data, such as storing session_id
-  //     if (data?.data?.id) {
-  //       // Store session_id in localStorage or cookies
-  //       setSessionId(data.data.id);
-  //     }
-  //   })
-  //   .catch((err) => console.error("Session tracking failed:", err));
-  //console.log(payload,"<<<<<paylaod2");
-  socket.emit("createSession", payload, (response) => {
-    
-    if (response.success && response.data?.id) {
-      
-      // Store session_id in localStorage or cookies
-      setSessionId(response.data.id);
-      resolve();
-    } else {
-      console.error("Session creation failed:", response.error || "Unknown error");
-      reject(new Error(response.error || "Session creation failed"));
-      //console.error("Session creation failed:", response.error || "Unknown error");
-    }
-  });
+    // fetch(SESSION_API_URL, {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     "User-Agent": navigator.userAgent,
+    //     apikey: WIDGET_ID,
+    //     //"Authorization": `Bearer ${TOKEN}`
+    //   },
+    //   body: JSON.stringify(payload),
+    //   // credentials: 'include',
+    // })
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     // Optionally handle response data, such as storing session_id
+    //     if (data?.data?.id) {
+    //       // Store session_id in localStorage or cookies
+    //       setSessionId(data.data.id);
+    //     }
+    //   })
+    //   .catch((err) => console.error("Session tracking failed:", err));
+    //console.log(payload,"<<<<<paylaod2");
+    socket.emit("createSession", payload, (response) => {
+      if (response.success && response.data?.id) {
+        // Store session_id in localStorage or cookies
+        setSessionId(response.data.id);
+        resolve();
+      } else {
+        console.error(
+          "Session creation failed:",
+          response.error || "Unknown error"
+        );
+        reject(new Error(response.error || "Session creation failed"));
+        //console.error("Session creation failed:", response.error || "Unknown error");
+      }
+    });
   });
 }
 
@@ -152,10 +153,9 @@ export function sendActivity(activityType, additionalData = {}, typeId = null) {
 //}
 
 export async function getTenantId(retryCount = 50, delay = 1000) {
-
   // Retry if WIDGET_ID is undefined
   while (typeof WIDGET_ID === "undefined" && retryCount > 0) {
-    await new Promise(resolve => setTimeout(resolve, delay));
+    await new Promise((resolve) => setTimeout(resolve, delay));
     retryCount--;
   }
 
@@ -170,7 +170,7 @@ export async function getTenantId(retryCount = 50, delay = 1000) {
         headers: {
           Connection: "keep-alive",
           apikey: WIDGET_ID,
-          "ngrok-skip-browser-warning":"1"
+          "ngrok-skip-browser-warning": "1",
         },
       }
     );
@@ -191,43 +191,49 @@ export async function getTenantId(retryCount = 50, delay = 1000) {
 }
 
 export async function fetchTriggers() {
-  const {userId} = getUserId();
+  const { userId } = getUserId();
 
-    try {
-      const response = await fetch(`${SERVER_DOMAIN}/flow/summary?type=trigger`, {
-        method: 'GET',
-        headers: {
-          Connection: "keep-alive",
-          apikey: WIDGET_ID,
-          "ngrok-skip-browser-warning":"1"
-        },
-      });
+  try {
+    const response = await fetch(`${SERVER_DOMAIN}/flow/summary?type=trigger`, {
+      method: "GET",
+      headers: {
+        Connection: "keep-alive",
+        apikey: WIDGET_ID,
+        "ngrok-skip-browser-warning": "1",
+      },
+    });
 
-      const data = await response.json();
-      //console.log(data.data);
-      //console.log(data.data[0].meta_data,"<<<<<<<triggers data1");
+    const data = await response.json();
+    //console.log(data.data);
+    //console.log(data.data[0].meta_data,"<<<<<<<triggers data1");
 
-      // Filter and store events with specific event_name and values data
-      eventTriggers = data.data
-      .filter(item => 
-        ['PAGE_VIEW', 'PRODUCT_VIEW', 'CLICKS', 'JWERO_ABANDONED_CART'].includes(item.event_name) && 
-        item.meta_data && item.meta_data.event_value
+    // Filter and store events with specific event_name and values data
+    eventTriggers = data.data
+      .filter(
+        (item) =>
+          [
+            "PAGE_VIEW",
+            "PRODUCT_VIEW",
+            "CLICKS",
+            "JWERO_ABANDONED_CART",
+          ].includes(item.event_name) &&
+          item.meta_data &&
+          item.meta_data.event_value
       )
-      .map(item => ({
+      .map((item) => ({
         id: item?.id,
         event: item.event_name.toLowerCase(),
         values: Array.isArray(item.meta_data.event_value)
-          ? item.meta_data.event_value.map(value => value.value || value.slug) // Extract values from dropdown items
-          : [item.meta_data.event_value] // Handle single text value as an array
+          ? item.meta_data.event_value.map((value) => value.value || value.slug) // Extract values from dropdown items
+          : [item.meta_data.event_value], // Handle single text value as an array
       }));
 
-      // console.log(eventTriggers, "<<<<<<< filtered event triggers");
-      //console.log(eventTriggers[0].values.length, "<<<<<<< filtered event triggers");
-      //return data;
-    } catch (error) {
-      console.error('Failed to fetch triggers:', error);
-    }
-  
+    // console.log(eventTriggers, "<<<<<<< filtered event triggers");
+    //console.log(eventTriggers[0].values.length, "<<<<<<< filtered event triggers");
+    //return data;
+  } catch (error) {
+    console.error("Failed to fetch triggers:", error);
+  }
 }
 
 export async function getEventTriggers() {

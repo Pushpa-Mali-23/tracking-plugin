@@ -35,30 +35,29 @@ export function initializeSession() {
   // Fetch the tenant ID before initializing the session
   // Return a promise to signal completion
   return new Promise((resolve, reject) => {
-  getTenantId()
-    .then((tenantId) => {
-      tenant_id = tenantId;
-      // Now proceed with session initialization after tenant ID is fetched
-      let sessionId = getSessionId();
-      if (!sessionId) {
-        //createNewSession();
-        createNewSession().then(() => resolve());
-      } else {
-        resetSessionTimer();
-        resetInactivityTimer();
-        //initializeIntervalActivity();
-      }
-      resolve();
-    })
-    .catch((error) => {
-      console.error("Error fetching tenant ID:", error);
-      reject(error);
-    });
-  
+    getTenantId()
+      .then((tenantId) => {
+        tenant_id = tenantId;
+        // Now proceed with session initialization after tenant ID is fetched
+        let sessionId = getSessionId();
+        if (!sessionId) {
+          //createNewSession();
+          createNewSession().then(() => resolve());
+        } else {
+          resetSessionTimer();
+          resetInactivityTimer();
+          //initializeIntervalActivity();
+        }
+        resolve();
+      })
+      .catch((error) => {
+        console.error("Error fetching tenant ID:", error);
+        reject(error);
+      });
 
-  // Listen for page unload to end the session
-  //window.addEventListener('beforeunload', handleSessionEnd);
-});
+    // Listen for page unload to end the session
+    //window.addEventListener('beforeunload', handleSessionEnd);
+  });
 }
 // Function to set interval-based activity tracking (every 5 minutes)
 function initializeIntervalActivity() {
@@ -75,46 +74,56 @@ function initializeIntervalActivity() {
 
 function createNewSession() {
   return new Promise((resolve) => {
-  let socketId = getSocketId();
-  //console.log(socketId);
-  // Retrieve geolocation data from storage
-  const storedGeolocationData = JSON.parse(
-    localStorage.getItem("locationData")
-  );
+    let socketId = getSocketId();
+    //console.log(socketId);
+    // Retrieve geolocation data from storage
+    const storedGeolocationData = JSON.parse(
+      localStorage.getItem("locationData")
+    );
 
-  // Extract individual geolocation values from storage, provide default values if not found
-  const { country_name, state, city, latitude, longitude, IPv4, ip, region, country } = storedGeolocationData || {};
+    // Extract individual geolocation values from storage, provide default values if not found
+    const {
+      country_name,
+      state,
+      city,
+      latitude,
+      longitude,
+      IPv4,
+      ip,
+      region,
+      country,
+    } = storedGeolocationData || {};
 
-  const { userId, tempUserId } = getUserId();
-  const contactId = userId ? parseInt(userId) : null;
-  const tempId = tempUserId ? parseInt(tempUserId) : null;
-  const sessionData = {
-    //contact_id: parseInt(user_id),
-    contact_id: contactId,
-    temp_contact_id: tempId,
-    ip_address: ip || IPv4, // Implement getUserIP if needed
-    coordinates:  {latitude: latitude || 0, longitude: longitude || 0 }, // Implement geolocation if needed
-    city: city, // Implement geolocation or use a service
-    state: region || state,
-    country: country || country_name,
-    channel: getChannel(), // Define how to determine the channel
-    referrer: document.referrer,
-    session_start: new Date().toISOString(),
-    socket_id: socketId,
-  };
+    const { userId, tempUserId } = getUserId();
+    const contactId = userId ? parseInt(userId) : null;
+    const tempId = tempUserId ? parseInt(tempUserId) : null;
+    const sessionData = {
+      //contact_id: parseInt(user_id),
+      contact_id: contactId,
+      temp_contact_id: tempId,
+      ip_address: ip || IPv4, // Implement getUserIP if needed
+      coordinates: { latitude: latitude || 0, longitude: longitude || 0 }, // Implement geolocation if needed
+      city: city, // Implement geolocation or use a service
+      state: region || state,
+      country: country || country_name,
+      channel: getChannel(), // Define how to determine the channel
+      referrer: document.referrer,
+      session_start: new Date().toISOString(),
+      socket_id: socketId,
+    };
 
-  // sendSession(sessionData);
-  // resetSessionTimer();
+    // sendSession(sessionData);
+    // resetSessionTimer();
 
-  // resetInactivityTimer();
-  //initializeIntervalActivity();
-      // Send the session data
-      Promise.resolve(sendSession(sessionData)).then(() => {
-        resetSessionTimer();
-        resetInactivityTimer();
-        resolve(); // Resolve after sending session data and resetting timers
-      });
+    // resetInactivityTimer();
+    //initializeIntervalActivity();
+    // Send the session data
+    Promise.resolve(sendSession(sessionData)).then(() => {
+      resetSessionTimer();
+      resetInactivityTimer();
+      resolve(); // Resolve after sending session data and resetting timers
     });
+  });
 }
 
 export function resetSessionTimer() {
