@@ -122,7 +122,7 @@ export function sendSocketActivity(
   additionalData = {},
   typeId = null
 ) {
-  console.log(sendSocketActivity,"<<<sendSocketActivity");
+  //console.log(sendSocketActivity,"<<<sendSocketActivity");
   if (!connect || !socket) return; // Prevent function execution if socket is disabled
   const sendActivity = () => {
     const sessionId = getSessionId();
