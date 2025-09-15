@@ -208,7 +208,7 @@ export function sendSocketActivity(
           );
         });
         //if (tenantId === "oAeqLavq0AQi")
-         console.log(matchingTrigger,"<<matchingTrigger");
+        //console.log(matchingTrigger,"<<matchingTrigger");
         if (matchingTrigger) {
           let pageIdentifier;
           if (activityType === "click") {
@@ -218,13 +218,13 @@ export function sendSocketActivity(
           }
           const normalizedPageIdentifier = stripSlashes(pageIdentifier);
           const normalizedValues = matchingTrigger.values.map(stripSlashes);
-          // if (tenantId === "oAeqLavq0AQi") 
+          // if (tenantId === "oAeqLavq0AQi")
           //console.log(tenantId,"<<tenantId")
-          // if (tenantId === "oAeqLavq0AQi") 
+          // if (tenantId === "oAeqLavq0AQi")
           //console.log(normalizedPageIdentifier,"<<normalizedPageIdentifier");
-          // if (tenantId === "oAeqLavq0AQi") 
+          // if (tenantId === "oAeqLavq0AQi")
           //console.log(normalizedValues,"<<normalizedValues");
-          // if (tenantId === "oAeqLavq0AQi") 
+          // if (tenantId === "oAeqLavq0AQi")
           //console.log(normalizedValues.includes(normalizedPageIdentifier),"<<normalizedPageIdentifier");
           // Check if the identifier exists in the event values for the "page_view" trigger
           if (normalizedValues.includes(normalizedPageIdentifier)) {
