@@ -122,6 +122,7 @@ export function sendSocketActivity(
   additionalData = {},
   typeId = null
 ) {
+  console.log(sendSocketActivity,"<<<sendSocketActivity");
   if (!connect || !socket) return; // Prevent function execution if socket is disabled
   const sendActivity = () => {
     const sessionId = getSessionId();
@@ -189,7 +190,7 @@ export function sendSocketActivity(
           : {}),
       };
     }
-    console.log(additionalData?.activity_data?.userIsLoggedIn,"<<<<additionalData?.activity_data?.userIsLoggedIn")
+    //console.log(additionalData?.activity_data?.userIsLoggedIn,"<<<<additionalData?.activity_data?.userIsLoggedIn")
     if (additionalData?.activity_data?.userIsLoggedIn === true) {
       // Check if the activityType is "page_view"
       if (
@@ -218,13 +219,13 @@ export function sendSocketActivity(
           const normalizedPageIdentifier = stripSlashes(pageIdentifier);
           const normalizedValues = matchingTrigger.values.map(stripSlashes);
           // if (tenantId === "oAeqLavq0AQi") 
-          console.log(tenantId,"<<tenantId")
+          //console.log(tenantId,"<<tenantId")
           // if (tenantId === "oAeqLavq0AQi") 
-          console.log(normalizedPageIdentifier,"<<normalizedPageIdentifier");
+          //console.log(normalizedPageIdentifier,"<<normalizedPageIdentifier");
           // if (tenantId === "oAeqLavq0AQi") 
-          console.log(normalizedValues,"<<normalizedValues");
+          //console.log(normalizedValues,"<<normalizedValues");
           // if (tenantId === "oAeqLavq0AQi") 
-          console.log(normalizedValues.includes(normalizedPageIdentifier),"<<normalizedPageIdentifier");
+          //console.log(normalizedValues.includes(normalizedPageIdentifier),"<<normalizedPageIdentifier");
           // Check if the identifier exists in the event values for the "page_view" trigger
           if (normalizedValues.includes(normalizedPageIdentifier)) {
             const { userId } = getUserId();
