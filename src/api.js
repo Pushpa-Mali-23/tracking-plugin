@@ -228,8 +228,6 @@ export async function fetchTriggers() {
           : [item.meta_data.event_value], // Handle single text value as an array
       }));
 
-    // console.log(eventTriggers, "<<<<<<< filtered event triggers");
-    //console.log(eventTriggers[0].values.length, "<<<<<<< filtered event triggers");
     //return data;
   } catch (error) {
     console.error("Failed to fetch triggers:", error);

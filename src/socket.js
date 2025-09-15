@@ -12,7 +12,7 @@ import {
 } from "./api";
 import { getUserId } from "./user";
 import { initActivityTracking } from "./activities";
-import { connect } from "./utils";
+import { connect, stripSlashes } from "./utils";
 
 // WebSocket URL
 const SOCKET_URL = "wss://api.jwero.com";
@@ -206,6 +206,7 @@ export function sendSocketActivity(
             (activityType === "click" && trigger.event === "clicks")
           );
         });
+
         if (matchingTrigger) {
           let pageIdentifier;
           if (activityType === "click") {
@@ -213,9 +214,11 @@ export function sendSocketActivity(
           } else {
             pageIdentifier = payload.activity_data?.identifier;
           }
+          const normalizedPageIdentifier = stripSlashes(pageIdentifier);
+          const normalizedValues = matchingTrigger.values.map(stripSlashes);
 
           // Check if the identifier exists in the event values for the "page_view" trigger
-          if (matchingTrigger.values.includes(pageIdentifier)) {
+          if (normalizedValues.includes(normalizedPageIdentifier)) {
             const { userId } = getUserId();
             // If there's a match, trigger the event
             const trigger_payload = {
@@ -229,7 +232,6 @@ export function sendSocketActivity(
               ],
               trigger_id: matchingTrigger?.id,
             };
-            //console.log("<<<<<<<<<<<<<<<<<<<<<<<<sending trigger event>>>>>>>>>>>>>>>>>>>>>>>>")
             socket.emit("handleEventTrigger", trigger_payload);
             delete payload?.activity_data?.userIsLoggedIn;
           }

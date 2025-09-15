@@ -95,3 +95,8 @@ export async function fetchGeolocation() {
 
   return null;
 }
+
+export function stripSlashes(str) {
+  if (str === "/") return str; // exception: keep "/" as itis
+  return str.replace(/^\/+|\/+$/g, "");
+}
