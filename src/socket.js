@@ -216,7 +216,9 @@ export function sendSocketActivity(
           }
           const normalizedPageIdentifier = stripSlashes(pageIdentifier);
           const normalizedValues = matchingTrigger.values.map(stripSlashes);
-
+          if (tenantId === "oAeqLavq0AQi") console.log(normalizedPageIdentifier,"<<normalizedPageIdentifier");
+          if (tenantId === "oAeqLavq0AQi") console.log(normalizedValues,"<<normalizedValues");
+          if (tenantId === "oAeqLavq0AQi") console.log(normalizedValues.includes(normalizedPageIdentifier),"<<normalizedPageIdentifier");
           // Check if the identifier exists in the event values for the "page_view" trigger
           if (normalizedValues.includes(normalizedPageIdentifier)) {
             const { userId } = getUserId();
@@ -232,6 +234,7 @@ export function sendSocketActivity(
               ],
               trigger_id: matchingTrigger?.id,
             };
+            if (tenantId === "oAeqLavq0AQi") console.log(trigger_payload,"<<<<trigger payload");
             socket.emit("handleEventTrigger", trigger_payload);
             delete payload?.activity_data?.userIsLoggedIn;
           }
