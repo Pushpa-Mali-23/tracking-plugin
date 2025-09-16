@@ -190,7 +190,7 @@ export function sendSocketActivity(
           : {}),
       };
     }
-    //console.log(additionalData?.activity_data?.userIsLoggedIn,"<<<<additionalData?.activity_data?.userIsLoggedIn")
+    console.log(additionalData?.activity_data?.userIsLoggedIn,"<<<<additionalData?.activity_data?.userIsLoggedIn")
     if (additionalData?.activity_data?.userIsLoggedIn === true) {
       // Check if the activityType is "page_view"
       if (
@@ -208,7 +208,7 @@ export function sendSocketActivity(
           );
         });
         //if (tenantId === "oAeqLavq0AQi")
-        //console.log(matchingTrigger,"<<matchingTrigger");
+        console.log(matchingTrigger,"<<matchingTrigger");
         if (matchingTrigger) {
           let pageIdentifier;
           if (activityType === "click") {
@@ -221,9 +221,9 @@ export function sendSocketActivity(
           // if (tenantId === "oAeqLavq0AQi")
           //console.log(tenantId,"<<tenantId")
           // if (tenantId === "oAeqLavq0AQi")
-          //console.log(normalizedPageIdentifier,"<<normalizedPageIdentifier");
+          console.log(normalizedPageIdentifier,"<<normalizedPageIdentifier");
           // if (tenantId === "oAeqLavq0AQi")
-          //console.log(normalizedValues,"<<normalizedValues");
+          console.log(normalizedValues,"<<normalizedValues");
           // if (tenantId === "oAeqLavq0AQi")
           //console.log(normalizedValues.includes(normalizedPageIdentifier),"<<normalizedPageIdentifier");
           // Check if the identifier exists in the event values for the "page_view" trigger
@@ -248,7 +248,7 @@ export function sendSocketActivity(
         }
       }
     }
-    //console.log("<<<<<userActivity")
+    console.log(payload,"<<<<<userActivity")
     socket.emit("userActivity", payload);
   };
   sendActivity();
