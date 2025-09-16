@@ -244,6 +244,7 @@ export function sendSocketActivity(
             //if (tenantId === "oAeqLavq0AQi")
             console.log(trigger_payload,"<<<<trigger payload");
             socket.emit("handleEventTrigger", trigger_payload);
+            console.log("trigger sent");
             delete payload?.activity_data?.userIsLoggedIn;
           }
         }
