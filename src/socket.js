@@ -248,7 +248,7 @@ export function sendSocketActivity(
         }
       }
     }
-    console.log("<<<<<userActivity")
+    //console.log("<<<<<userActivity")
     socket.emit("userActivity", payload);
   };
   sendActivity();
