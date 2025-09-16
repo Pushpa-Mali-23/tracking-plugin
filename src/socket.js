@@ -248,6 +248,7 @@ export function sendSocketActivity(
         }
       }
     }
+    console.log("<<<<<userActivity")
     socket.emit("userActivity", payload);
   };
   sendActivity();
